@@ -17,11 +17,14 @@ const App = () => {
 
     function saveNote() {
         const hashedKey = hashKey(secret);
-        toast.promise(makeRequest("/api/save", "POST", { note, key: hashedKey }), {
+        toast.promise(makeRequest("/api/save", "POST", { note, key: hashedKey })
+                        .then(_ => getNotes()), {
             loading: "Bufferizing...",
             success: "Buffered",
             error: "Failed to buffer"
         });
+
+        getNotes();
     }
 
     function getNotes() {
