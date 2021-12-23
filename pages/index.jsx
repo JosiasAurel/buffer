@@ -12,10 +12,12 @@ import styles from "../styles/index.module.css";
 const App = () => {
     const [newSecret, setNewSecret] = React.useState("");
     const [newUserModal, setNewUserModal] = React.useState(false);
+    const [settings, setSettings] = React.useState(false);
     const [secret, setSecret] = React.useState("");
     const [note, setNote] = React.useState("");
     const [notes, setNotes] = React.useState([]);
     const [createNote, setCreateNote] = React.useState(false);
+    const [toggleChange, setToggleChange] = React.useState(false);
 
     function saveNote() {
         const hashedKey = hashKey(secret);
@@ -46,21 +48,21 @@ const App = () => {
         if (secret !== undefined) {
             setSecret(secret);
         } else {
-            const { newSecurityKey } = createKey();
-            localStorage.setItem("secret", newSecurityKey);
-            setSecret(newSecurityKey);
+            setNewUserModal(true);
         }
 
         getNotes();
 
-    }, [newSecret]);
+    }, [toggleChange]);
 
 
     return (
         <div>
             <header className={styles.header}>
                 <span>
-                <Tag> Buffer.link </Tag>
+                <Tag onClick={() => {
+
+                }}> Buffer.link </Tag>
                 </span>
             </header>
 
@@ -129,12 +131,28 @@ const App = () => {
                     <Input clearable placeholder="Secret" value={newSecret} onChange={e => setNewSecret(e.target.value)} />
                     <Button onClick={_ => {
                         localStorage.setItem("secret", newSecret);
+                        setToggleChange(!toggleChange);
                     }}>
                         Save
                     </Button>
                 </Modal.Content>
             </Modal>
 
+            {/* settings modal */}
+            <Modal value={settings} onClose={() => setSettings(false)}>
+                <Modal.Title>
+                    Settings
+                </Modal.Title>
+                <Modal.Content>
+                    <Input clearable placeholder="Secret" value={newSecret} onChange={e => setNewSecret(e.target.value)} />
+                    <Button onClick={_ => {
+                        localStorage.setItem("secret", newSecret);
+                        setToggleChange(!toggleChange);
+                    }}>
+                        Save
+                    </Button>
+                </Modal.Content>
+            </Modal>
         </div>
     )
 }
