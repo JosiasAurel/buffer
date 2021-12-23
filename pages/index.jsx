@@ -1,13 +1,13 @@
 import React from "react";
 
-import { Card, Tag, Button } from "@geist-ui/react";
+import { Card, Tag, Button, Textarea, Fieldset } from "@geist-ui/react";
 
 import styles from "../styles/index.module.css";
 
 const App = () => {
     const [note, setNote] = React.useState("");
     const [notes, setNotes] = React.useState([]);
-
+    const [createNote, setCreateNote] = React.useState(false);
     return (
         <div>
             <header className={styles.header}>
@@ -24,15 +24,46 @@ const App = () => {
                             </Card>
                         )
                     })}
-                    <Button>
+                    <Button onClick={_ => setCreateNote(!createNote)}>
                         Add Note
                     </Button>
+                    { createNote ?
+                    <div>
+                    <Fieldset>
+                        <Fieldset.Subtitle>
+                        <Textarea value={note} onChange={e => setNote(e.target.value)}>
+                    
+                    </Textarea>
+                        </Fieldset.Subtitle>
+                        <Fieldset.Footer>
+                            {new Date().toDateString()}
+                            <Button auto scale={0.35}> Save </Button>
+                        </Fieldset.Footer>
+                        </Fieldset>
+                </div>
+                : "" }
                     </main>
             : <div>
                 <h2>No notes yet!</h2>
-                <Button>
+                <Button onClick={_ => setCreateNote(!createNote)}>
                         Add Note
                     </Button>
+                    { createNote ?
+                    <div>
+                        <Fieldset>
+                        <Fieldset.Subtitle>
+                        <Textarea value={note} onChange={e => setNote(e.target.value)}>
+                    
+                    </Textarea>
+                        </Fieldset.Subtitle>
+                        <Fieldset.Footer>
+                            {new Date().toDateString()}
+                            <Button auto scale={0.35}> Save </Button>
+                        </Fieldset.Footer>
+                        </Fieldset>
+
+                </div>
+                : "" }
             </div> }
             </div>
         </div>
