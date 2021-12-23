@@ -1,6 +1,18 @@
 
 .header {
+    position: fixed;
+    top: 0;
     width: 100vw;
+    backdrop-filter: blur(3px);
+    background-color: rgba(255, 255, 255, 0.185);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: solid 1px grey;
+}
+
+.header * {
+    margin: 1em;
 }
 
 .notes {
@@ -8,4 +20,5 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+    margin-top: 3em;
 }

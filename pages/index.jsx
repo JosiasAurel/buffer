@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Card, Tag, Button, Textarea, Fieldset } from "@geist-ui/react";
+import { Card, Tag, Button, Textarea, Fieldset, Spacer } from "@geist-ui/react";
 
 import { createKey, hashKey } from "../utils/cryptoman";
 import { makeRequest } from "../utils/request";
@@ -37,7 +37,7 @@ const App = () => {
         });
     }
 
-    setInterval(() => getNotes(), 5000); // fetch all notes every 5 seconds
+    // setInterval(() => getNotes(), 5000); // fetch all notes every 5 seconds
     React.useEffect(() => {
         const secret = localStorage.getItem("secret") ?? undefined;
 
@@ -57,7 +57,9 @@ const App = () => {
     return (
         <div>
             <header className={styles.header}>
+                <span>
                 <Tag> Buffer.link </Tag>
+                </span>
             </header>
 
             <div className={styles.notes}>
@@ -70,9 +72,12 @@ const App = () => {
                             </Card>
                         )
                     })}
+                    <div>
                     <Button onClick={_ => setCreateNote(!createNote)}>
                         Add Note
                     </Button>
+                    <Spacer />
+                    </div>
                     { createNote ?
                     <div>
                     <Fieldset>
@@ -94,6 +99,7 @@ const App = () => {
                 <Button onClick={_ => setCreateNote(!createNote)}>
                         Add Note
                     </Button>
+                    <Spacer />
                     { createNote ?
                     <div>
                         <Fieldset>
