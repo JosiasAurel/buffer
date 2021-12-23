@@ -19,6 +19,7 @@ const App = () => {
             setSecret(secret);
         } else {
             const { newSecurityKey } = createKey();
+            localStorage.setItem("secret", newSecurityKey);
             setSecret(newSecurityKey);
         }
 
