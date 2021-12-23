@@ -2,12 +2,27 @@ import React from "react";
 
 import { Card, Tag, Button, Textarea, Fieldset } from "@geist-ui/react";
 
+import { createKey, connectWithKey } from "../utils/cryptoman";
+
 import styles from "../styles/index.module.css";
 
 const App = () => {
+    const [secret, setSecret] = React.useState("");
     const [note, setNote] = React.useState("");
     const [notes, setNotes] = React.useState([]);
     const [createNote, setCreateNote] = React.useState(false);
+
+    React.useEffect(() => {
+        const secret = localStorage.getItem("secret") ?? undefined;
+
+        if (secret !== undefined) {
+            setSecret(secret);
+        } else {
+            const { newSecurityKey } = createKey();
+            setSecret(newSecurityKey);
+        }
+
+    }, []);
     return (
         <div>
             <header className={styles.header}>
