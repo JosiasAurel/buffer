@@ -1,0 +1,30 @@
+{
+  "name": "buffer.link",
+  "version": "1.0.0",
+  "description": "A tool to share text between connected devices via PoO",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JosiasAurel/buffer.git"
+  },
+  "keywords": [
+    "Text",
+    "Sharing",
+    "Crypto"
+  ],
+  "author": "Josias Aurel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JosiasAurel/buffer/issues"
+  },
+  "homepage": "https://github.com/JosiasAurel/buffer#readme",
+  "dependencies": {
+    "deta": "^1.0.1",
+    "next": "^12.0.7",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
+}
