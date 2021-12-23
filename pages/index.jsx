@@ -2,7 +2,10 @@ import React from "react";
 
 import { Card, Tag, Button, Textarea, Fieldset } from "@geist-ui/react";
 
-import { createKey, connectWithKey } from "../utils/cryptoman";
+import { createKey, hashKey } from "../utils/cryptoman";
+import { makeRequest } from "../utils/request";
+
+import toast from "react-hot-toast";
 
 import styles from "../styles/index.module.css";
 
@@ -11,6 +14,15 @@ const App = () => {
     const [note, setNote] = React.useState("");
     const [notes, setNotes] = React.useState([]);
     const [createNote, setCreateNote] = React.useState(false);
+
+    function saveNote() {
+        const hashedKey = hashKey(secret);
+        toast.promise(makeRequest("/api/save", "GET", { note, key: hashedKey }), {
+            loading: "Bufferizing...",
+            success: "Buffered",
+            error: "Failed to buffer"
+        });
+    }
 
     React.useEffect(() => {
         const secret = localStorage.getItem("secret") ?? undefined;
@@ -24,6 +36,8 @@ const App = () => {
         }
 
     }, []);
+
+
     return (
         <div>
             <header className={styles.header}>

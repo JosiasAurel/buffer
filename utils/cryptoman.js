@@ -9,7 +9,7 @@ function createKey() {
     return { newSecurityKey, result };
 }
 
-function connectWithKey(securityKey) {
+function hashKey(securityKey) {
     const result = createHash("sha256")
                     .update(securityKey)
                     .digest("hex");
@@ -18,5 +18,5 @@ function connectWithKey(securityKey) {
 
 export {
     createKey,
-    connectWithKey
+    hashKey
 };
