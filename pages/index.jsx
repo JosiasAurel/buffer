@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Card, Tag, Button, Textarea, Fieldset, Spacer } from "@geist-ui/react";
+import { Card, Tag, Button, Textarea, Fieldset, Spacer, Modal, Input } from "@geist-ui/react";
 
 import { createKey, hashKey } from "../utils/cryptoman";
 import { makeRequest } from "../utils/request";
@@ -10,6 +10,8 @@ import toast from "react-hot-toast";
 import styles from "../styles/index.module.css";
 
 const App = () => {
+    const [newSecret, setNewSecret] = React.useState("");
+    const [newUserModal, setNewUserModal] = React.useState(false);
     const [secret, setSecret] = React.useState("");
     const [note, setNote] = React.useState("");
     const [notes, setNotes] = React.useState([]);
@@ -51,7 +53,7 @@ const App = () => {
 
         getNotes();
 
-    }, []);
+    }, [newSecret]);
 
 
     return (
@@ -118,6 +120,21 @@ const App = () => {
                 : "" }
             </div> }
             </div>
+            {/* new user modal */}
+            <Modal value={newUserModal} onClose={() => setNewUserModal(false)}>
+                <Modal.Title>
+                    Are you new ? Otherwise, enter your secret below
+                </Modal.Title>
+                <Modal.Content>
+                    <Input clearable placeholder="Secret" value={newSecret} onChange={e => setNewSecret(e.target.value)} />
+                    <Button onClick={_ => {
+                        localStorage.setItem("secret", newSecret);
+                    }}>
+                        Save
+                    </Button>
+                </Modal.Content>
+            </Modal>
+
         </div>
     )
 }
