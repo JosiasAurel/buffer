@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/JosiasAurel/buffer#readme",
   "dependencies": {
+    "@geist-ui/react": "^2.2.0",
     "deta": "^1.0.1",
     "next": "^12.0.7",
     "react": "^17.0.2",
