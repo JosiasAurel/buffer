@@ -67,7 +67,7 @@ const App = () => {
                         </Fieldset.Subtitle>
                         <Fieldset.Footer>
                             {new Date().toDateString()}
-                            <Button auto scale={0.35}> Save </Button>
+                            <Button onClick={_e => saveNote()} auto scale={0.35}> Save </Button>
                         </Fieldset.Footer>
                         </Fieldset>
                 </div>
@@ -88,7 +88,7 @@ const App = () => {
                         </Fieldset.Subtitle>
                         <Fieldset.Footer>
                             {new Date().toDateString()}
-                            <Button auto scale={0.35}> Save </Button>
+                            <Button onClick={_e => saveNote()} auto scale={0.35}> Save </Button>
                         </Fieldset.Footer>
                         </Fieldset>
 
