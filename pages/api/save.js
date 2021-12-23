@@ -11,9 +11,9 @@ export default function saveNote(req, res) {
 
         try {
             notes.put({
-                note,
+                note: note,
                 owner: key
-            });
+            }, key);
             res.json({status: "Success"});
         } catch(err) { res.json({status: "Failed"}); }
         return;

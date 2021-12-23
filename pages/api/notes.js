@@ -9,9 +9,11 @@ export default async function fetchNotes(req, res) {
     if (req.method === "POST") {
         const { key } = req.body;
 
-        const notes = await notes.fetch({owner: key}).items;
-
-        res.json({notes});
+        const notes_ = await notes.fetch({owner: key});
+        const notes__ = await notes_.items;
+        
+        res.json({notes: notes__});
+        return;
     }
 
     res.send("Failed");

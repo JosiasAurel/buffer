@@ -34,7 +34,7 @@ const App = () => {
     function getNotes() {
         const hashedKey = hashKey(secret);
         toast.promise(makeRequest("/api/notes", { key: hashedKey })
-                        .then(result => setNotes(result)), {
+                        .then(result => setNotes(result.notes)), {
             loading: "Loading Buffer",
             success: "Got your buffer",
             error: "Failed to load Buffer"
@@ -61,7 +61,7 @@ const App = () => {
             <header className={styles.header}>
                 <span>
                 <Tag onClick={() => {
-
+                    setSettings(true);
                 }}> Buffer.link </Tag>
                 </span>
             </header>
