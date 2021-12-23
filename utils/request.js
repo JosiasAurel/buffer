@@ -1,12 +1,7 @@
 
-async function makeRequest(endpoint, method, body) {
-    if (method === "GET") {
-        const response = await fetch(endpoint);
-        const result = await response.json();
-        return result;
-    }
+async function makeRequest(endpoint, body) {
     const response = await fetch(endpoint, {
-        method,
+        method: "POST",
         headers: {
             "Content-Type": "application/json"
         },

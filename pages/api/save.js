@@ -19,5 +19,5 @@ export default function saveNote(req, res) {
         return;
     }
 
-    res.json("Save Function");
+    res.send("Save Function");
 }

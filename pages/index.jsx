@@ -17,10 +17,20 @@ const App = () => {
 
     function saveNote() {
         const hashedKey = hashKey(secret);
-        toast.promise(makeRequest("/api/save", "GET", { note, key: hashedKey }), {
+        toast.promise(makeRequest("/api/save", "POST", { note, key: hashedKey }), {
             loading: "Bufferizing...",
             success: "Buffered",
             error: "Failed to buffer"
+        });
+    }
+
+    function getNotes() {
+        const hashedKey = hashKey(secret);
+        toast.promise(makeRequest("/api/notes", { key: hashedKey })
+                        .then(result => setNotes(result)), {
+            loading: "Loading Buffer",
+            success: "Got your buffer",
+            error: "Failed to load Buffer"
         });
     }
 
@@ -34,6 +44,8 @@ const App = () => {
             localStorage.setItem("secret", newSecurityKey);
             setSecret(newSecurityKey);
         }
+
+        getNotes();
 
     }, []);
 
