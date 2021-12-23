@@ -37,6 +37,7 @@ const App = () => {
         });
     }
 
+    setInterval(() => getNotes(), 5000); // fetch all notes every 5 seconds
     React.useEffect(() => {
         const secret = localStorage.getItem("secret") ?? undefined;
 
