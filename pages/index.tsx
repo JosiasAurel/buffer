@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Card, Tag, Button, Textarea, Fieldset, Spacer, Modal, Input } from "@geist-ui/react";
+import { Note, Tag, Button, Textarea, Fieldset, Spacer, Modal, Input, useClipboard } from "@geist-ui/react";
 
 import { createKey, hashKey } from "../utils/cryptoman";
 import { makeRequest } from "../utils/request";
@@ -18,6 +18,9 @@ const App: React.FC = (): JSX.Element => {
     const [buffers, setBuffers] = React.useState<Array<any>>([]);
     const [createBuffer, setCreateBuffer] = React.useState<boolean>(false);
     const [toggleChange, setToggleChange] = React.useState<boolean>(false);
+
+    // clipboard
+    const { copy } = useClipboard();
 
     function saveBuffer() {
         const hashedKey = hashKey(secret);
@@ -96,9 +99,12 @@ const App: React.FC = (): JSX.Element => {
                         {buffers.map((buffer, idx) => {
                             return (
                                 <>
-                                    <Card key={idx}>
+                                    <Note onClick={_ => {
+                                        copy(buffer);
+                                        toast("Copied to clipboard");
+                                    }} label={false} key={idx}>
                                         {buffer}
-                                    </Card>
+                                    </Note>
                                     <Spacer />
                                 </>
                             )
