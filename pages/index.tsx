@@ -10,6 +10,8 @@ import toast from "react-hot-toast";
 
 import styles from "../styles/index.module.css";
 
+import Head from "next/head";
+
 const App: React.FC = (): JSX.Element => {
 
     const [newUserModal, setNewUserModal] = React.useState<boolean>(false);
@@ -86,6 +88,25 @@ const App: React.FC = (): JSX.Element => {
 
     return (
         <div>
+            <Head>
+                <title>Your text buffer</title>
+                <meta name="title" content="Your text buffer" />
+                <meta name="description" content="Buffered.link is a simple tool that allows you to share text between connected by simply pasting the text in here." />
+
+
+                <meta property="og:type" content="website" />
+                <meta property="og:url" content="https://buffered.link/" />
+                <meta property="og:title" content="Your text buffer" />
+                <meta property="og:description" content="Buffered.link is a simple tool that allows you to share text between connected by simply pasting the text in here." />
+                <meta property="og:image" content="https://i.ibb.co/3pKTH9n/Buffered-link-1.png" />
+
+
+                <meta property="twitter:card" content="summary_large_image" />
+                <meta property="twitter:url" content="https://buffered.link/" />
+                <meta property="twitter:title" content="Your text buffer" />
+                <meta property="twitter:description" content="Buffered.link is a simple tool that allows you to share text between connected by simply pasting the text in here." />
+                <meta property="twitter:image" content="https://i.ibb.co/3pKTH9n/Buffered-link-1.png" />
+            </Head>
             <header className={styles.header}>
                 <span>
                     <Tag style={{
@@ -247,8 +268,6 @@ const App: React.FC = (): JSX.Element => {
                     <p>
                         Buffered.link is a simple tool that allows you to share text
                         between connected by simply pasting the text in here. <br />
-                        The buffer is refreshed every 5 seconds so you won't need to refresh the page to get the lastest
-                        saves.
                     </p>
                     <p>
                         This tool is fully open source. <br />
