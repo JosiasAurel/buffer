@@ -324,6 +324,7 @@ const App: React.FC = (): JSX.Element => {
             </Button>
           </div>
         </Modal.Content>
+        <Modal.Action passive onClick={() => setNewUserModal(false)}>Close</Modal.Action>
       </Modal>
 
       {/* settings modal */}
@@ -354,6 +355,7 @@ const App: React.FC = (): JSX.Element => {
             Save
           </Button>
         </Modal.Content>
+        <Modal.Action passive onClick={() => setSettings(false)}>Close</Modal.Action>
       </Modal>
 
       {/* info modal */}
@@ -390,6 +392,7 @@ const App: React.FC = (): JSX.Element => {
             </ul>
           </div>
         </Modal.Content>
+        <Modal.Action passive onClick={() => setInfo(false)}></Modal.Action>
       </Modal>
     </div>
   );
