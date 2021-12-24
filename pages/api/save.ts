@@ -1,11 +1,13 @@
 
+import { NextApiRequest, NextApiResponse } from "next";
+
 const { Deta } = require("deta");
 
 const deta = Deta(process.env.NEXT_PUBLIC_DETA_PROJECT_KEY);
 
 const notes = deta.Base("notes");
 
-export default function saveNote(req, res) {
+export default function saveNote(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
         const { note, key } = req.body;
 

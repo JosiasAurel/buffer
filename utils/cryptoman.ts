@@ -1,7 +1,12 @@
 const { createHash } = require("crypto");
 const { nanoid } = require("nanoid");
 
-function createKey() {
+interface CreateKeyResult {
+    newSecurityKey: string
+    result: string
+}
+
+function createKey(): CreateKeyResult {
     const newSecurityKey = nanoid(5);
     const result = createHash("sha256")
                     .update(newSecurityKey)
@@ -9,7 +14,7 @@ function createKey() {
     return { newSecurityKey, result };
 }
 
-function hashKey(securityKey) {
+function hashKey(securityKey: string): string {
     const result = createHash("sha256")
                     .update(securityKey)
                     .digest("hex");

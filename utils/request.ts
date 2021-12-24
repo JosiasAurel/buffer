@@ -1,5 +1,5 @@
 
-async function makeRequest(endpoint, body) {
+async function makeRequest(endpoint: string, body: any): Promise<any> {
     const response = await fetch(endpoint, {
         method: "POST",
         headers: {
