@@ -1,20 +1,19 @@
 
 import { NextApiRequest, NextApiResponse } from "next";
 
-const { Deta } = require("deta");
+import { Deta } from "deta";
 
 const deta = Deta(process.env.NEXT_PUBLIC_DETA_PROJECT_KEY);
 
-const notes = deta.Base("notes");
+const buffers = deta.Base("buffers");
 
 export default async function fetchNotes(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
         const { key } = req.body;
 
-        const notes_ = await notes.fetch({owner: key});
-        const notes__ = await notes_.items;
-        
-        res.json({notes: notes__});
+        const fetchedBuffers = await (await buffers.fetch({owner: key})).items;
+
+        res.json({fetchedBuffers})
         return;
     }
 

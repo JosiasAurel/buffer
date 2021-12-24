@@ -14,34 +14,39 @@ const App: React.FC = (): JSX.Element => {
     const [newUserModal, setNewUserModal] = React.useState<boolean>(false);
     const [settings, setSettings] = React.useState<boolean>(false);
     const [secret, setSecret] = React.useState<string>("");
-    const [note, setNote] = React.useState<string>("");
-    const [notes, setNotes] = React.useState<Array<any>>([]);
-    const [createNote, setCreateNote] = React.useState<boolean>(false);
+    const [buffer, setBuffer] = React.useState<string>("");
+    const [buffers, setBuffers] = React.useState<Array<any>>([]);
+    const [createBuffer, setCreateBuffer] = React.useState<boolean>(false);
     const [toggleChange, setToggleChange] = React.useState<boolean>(false);
 
-    function saveNote() {
+    function saveBuffer() {
         const hashedKey = hashKey(secret);
-        toast.promise(makeRequest("/api/save", { note, key: hashedKey })
-            .then(_ => getNotes()), {
+        toast.promise(makeRequest("/api/save", { buffer, key: hashedKey })
+            .then(_ => getBuffers()), {
             loading: "Bufferizing...",
             success: "Buffered",
             error: "Failed to buffer"
         });
 
-        getNotes();
+        getBuffers();
     }
 
-    function getNotes() {
+    function getBuffers() {
         const hashedKey = hashKey(secret);
-        toast.promise(makeRequest("/api/notes", { key: hashedKey })
-            .then(result => setNotes(result.notes)), {
+        toast.promise(makeRequest("/api/buffers", { key: hashedKey })
+            .then((result: Array<any>) => {
+                const clientBuffers: Array<string> = [];
+                result.map(buffer => clientBuffers.push(buffer.buffer));
+                console.log("clientBuffers", clientBuffers);
+                setBuffers(clientBuffers);
+            }), {
             loading: "Loading Buffer",
             success: "Got your buffer",
             error: "Failed to load Buffer"
         });
     }
 
-    // setInterval(() => getNotes(), 5000); // fetch all notes every 5 seconds
+    // setInterval(() => getBuffers(), 5000); // fetch all notes every 5 seconds
     React.useEffect(() => {
         const secret = localStorage.getItem("secret") ?? undefined;
 
@@ -51,9 +56,9 @@ const App: React.FC = (): JSX.Element => {
             setNewUserModal(true);
         }
 
-        getNotes();
+        getBuffers();
 
-    }, [toggleChange]);
+    }, []);
 
 
     return (
@@ -67,9 +72,9 @@ const App: React.FC = (): JSX.Element => {
             </header>
 
             <div className={styles.notes}>
-                {notes.length > 0 ?
+                {buffers.length > 0 ?
                     <main>
-                        {notes.map((notes, idx) => {
+                        {buffers.map((notes, idx) => {
                             return (
                                 <Card key={idx}>
                                     {notes}
@@ -77,22 +82,22 @@ const App: React.FC = (): JSX.Element => {
                             )
                         })}
                         <div>
-                            <Button onClick={_ => setCreateNote(!createNote)}>
+                            <Button onClick={_ => setCreateBuffer(!createBuffer)}>
                                 Add Note
                             </Button>
                             <Spacer />
                         </div>
-                        {createNote ?
+                        {createBuffer ?
                             <div>
                                 <Fieldset>
                                     <Fieldset.Subtitle>
-                                        <Textarea value={note} onChange={e => setNote(e.target.value)}>
+                                        <Textarea value={buffer} onChange={e => setBuffer(e.target.value)}>
 
                                         </Textarea>
                                     </Fieldset.Subtitle>
                                     <Fieldset.Footer>
                                         {new Date().toDateString()}
-                                        <Button onClick={_e => saveNote()} auto scale={0.35}> Save </Button>
+                                        <Button onClick={_e => saveBuffer()} auto scale={0.35}> Save </Button>
                                     </Fieldset.Footer>
                                 </Fieldset>
                             </div>
@@ -100,21 +105,21 @@ const App: React.FC = (): JSX.Element => {
                     </main>
                     : <div>
                         <h2>No notes yet!</h2>
-                        <Button onClick={_ => setCreateNote(!createNote)}>
+                        <Button onClick={_ => setCreateBuffer(!createBuffer)}>
                             Add Note
                         </Button>
                         <Spacer />
-                        {createNote ?
+                        {createBuffer ?
                             <div>
                                 <Fieldset>
                                     <Fieldset.Subtitle>
-                                        <Textarea value={note} onChange={e => setNote(e.target.value)}>
+                                        <Textarea value={buffer} onChange={e => setBuffer(e.target.value)}>
 
                                         </Textarea>
                                     </Fieldset.Subtitle>
                                     <Fieldset.Footer>
                                         {new Date().toDateString()}
-                                        <Button onClick={_e => saveNote()} auto scale={0.35}> Save </Button>
+                                        <Button onClick={_e => saveBuffer()} auto scale={0.35}> Save </Button>
                                     </Fieldset.Footer>
                                 </Fieldset>
 
@@ -132,6 +137,7 @@ const App: React.FC = (): JSX.Element => {
                     <Button onClick={_ => {
                         localStorage.setItem("secret", newSecret);
                         setToggleChange(!toggleChange);
+                        setNewUserModal(false); // close modal
                     }}>
                         Save
                     </Button>
@@ -148,12 +154,13 @@ const App: React.FC = (): JSX.Element => {
                     <Button onClick={_ => {
                         localStorage.setItem("secret", newSecret);
                         setToggleChange(!toggleChange);
+                        setSettings(false); // close modal
                     }}>
                         Save
                     </Button>
                 </Modal.Content>
             </Modal>
-        </div>
+        </div >
     )
 }
 
