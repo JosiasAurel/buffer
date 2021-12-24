@@ -21,9 +21,6 @@ const App: React.FC = (): JSX.Element => {
     const [toggleChange, setToggleChange] = React.useState<boolean>(false);
     const [info, setInfo] = React.useState<boolean>(false);
 
-    // color mode
-    const [dark, setDark] = React.useState<boolean>(false);
-
     // clipboard
     const { copy } = useClipboard();
 
@@ -39,15 +36,30 @@ const App: React.FC = (): JSX.Element => {
         getBuffers();
     }
 
+    async function refreshBuffers() {
+        const secret = localStorage.getItem("secret");
+        const hashedKey = hashKey(secret);
+        const newBuffers = await makeRequest("/api/buffers", { key: hashedKey });
+        const clientBuffers: Array<string> = [];
+        newBuffers?.fetchedBuffers.map(buffer => clientBuffers.push(buffer.buffer));
+
+        const allEqual: boolean = clientBuffers.every((buffer, idx) => buffer === buffers[idx]);
+
+        if (!allEqual) {
+            toast("New Buffer");
+            return;
+        }
+        return;
+    }
     function getBuffers() {
         const secret = localStorage.getItem("secret");
         const hashedKey = hashKey(secret);
         toast.promise(makeRequest("/api/buffers", { key: hashedKey })
             .then((result: any) => {
-                console.log("result", result);
+                // console.log("result", result);
                 const clientBuffers: Array<string> = [];
                 result?.fetchedBuffers.map(buffer => clientBuffers.push(buffer.buffer));
-                console.log("clientBuffers", clientBuffers);
+                // console.log("clientBuffers", clientBuffers);
                 setBuffers(clientBuffers);
             }), {
             loading: "Loading Buffer",
@@ -80,7 +92,6 @@ const App: React.FC = (): JSX.Element => {
                 </span>
                 <div className={styles.controls}>
                     <Button onClick={_e => setCreateBuffer(!createBuffer)} iconRight={<Plus />} auto scale={0.35} px={0.6} />
-                    <Button iconRight={dark ? <Sun /> : <Moon />} auto scale={0.35} px={0.6} />
                     <Button onClick={() => {
                         setSettings(true);
                     }} iconRight={<Settings />} auto scale={0.35} px={0.6} />
