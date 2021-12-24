@@ -10,7 +10,7 @@ const BufferedApp: React.FC<AppProps> = ({ Component, pageProps }) => {
     return (
         <>
             <Component {...pageProps} />
-            <Toaster />
+            <Toaster position="bottom-center" />
         </>
     )
 }

@@ -27,7 +27,7 @@ const App: React.FC = (): JSX.Element => {
             success: "Buffered",
             error: "Failed to buffer"
         });
-
+        setCreateBuffer(false);
         getBuffers();
     }
 
@@ -59,7 +59,7 @@ const App: React.FC = (): JSX.Element => {
             setNewUserModal(true);
         }
 
-    }, []);
+    }, [toggleChange]);
 
 
     return (
@@ -76,6 +76,23 @@ const App: React.FC = (): JSX.Element => {
                 <Spacer h={3} />
                 {buffers.length > 0 ?
                     <main>
+                        {createBuffer ?
+                            <>
+                                <Fieldset>
+                                    <Fieldset.Subtitle>
+                                        <Textarea value={buffer} onChange={e => setBuffer(e.target.value)}>
+
+                                        </Textarea>
+                                    </Fieldset.Subtitle>
+                                    <Fieldset.Footer>
+                                        {new Date().toDateString()}
+                                        <Button onClick={_e => saveBuffer()} auto scale={0.35}> Save </Button>
+                                    </Fieldset.Footer>
+                                </Fieldset>
+                                <Spacer />
+                            </>
+                            : ""}
+                        <Spacer />
                         {buffers.map((buffer, idx) => {
                             return (
                                 <>
@@ -86,36 +103,12 @@ const App: React.FC = (): JSX.Element => {
                                 </>
                             )
                         })}
-                        <div>
-                            <Button onClick={_ => setCreateBuffer(!createBuffer)}>
-                                Add Note
-                            </Button>
-                            <Spacer />
-                        </div>
-                        {createBuffer ?
-                            <div>
-                                <Fieldset>
-                                    <Fieldset.Subtitle>
-                                        <Textarea value={buffer} onChange={e => setBuffer(e.target.value)}>
-
-                                        </Textarea>
-                                    </Fieldset.Subtitle>
-                                    <Fieldset.Footer>
-                                        {new Date().toDateString()}
-                                        <Button onClick={_e => saveBuffer()} auto scale={0.35}> Save </Button>
-                                    </Fieldset.Footer>
-                                </Fieldset>
-                            </div>
-                            : ""}
                     </main>
                     : <div>
                         <h2>No notes yet!</h2>
-                        <Button onClick={_ => setCreateBuffer(!createBuffer)}>
-                            Add Note
-                        </Button>
-                        <Spacer />
                         {createBuffer ?
-                            <div>
+
+                            <>
                                 <Fieldset>
                                     <Fieldset.Subtitle>
                                         <Textarea value={buffer} onChange={e => setBuffer(e.target.value)}>
@@ -127,9 +120,11 @@ const App: React.FC = (): JSX.Element => {
                                         <Button onClick={_e => saveBuffer()} auto scale={0.35}> Save </Button>
                                     </Fieldset.Footer>
                                 </Fieldset>
+                                <Spacer />
+                            </>
 
-                            </div>
                             : ""}
+                        <Spacer />
                     </div>}
             </div>
             {/* new user modal */}
