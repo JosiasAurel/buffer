@@ -14,7 +14,8 @@ export default function saveNote(req: NextApiRequest, res: NextApiResponse) {
         try {
             buffers.put({
                 buffer,
-                owner: key
+                owner: key,
+                date: new Date().toUTCString()
             });
             res.json({status: "Success"});
         } catch(err) { res.json({status: "Failed"}); }

@@ -144,7 +144,7 @@ const App: React.FC = (): JSX.Element => {
                         })}
                     </main>
                     : <div>
-                        <h2>No notes yet!</h2>
+                        <h2>Empty Buffer</h2>
                         {createBuffer ?
 
                             <>
@@ -255,6 +255,10 @@ const App: React.FC = (): JSX.Element => {
                         This tool is fully open source. <br />
                         If you found any issues and want to file a bug, or you
                         just want to contribute to improve this tool, you can find the entire codebase <a href="https://github.com/JosiasAurel/buffer">here</a>.
+                    </p>
+
+                    <p>
+                        Time is in UTC format.
                     </p>
                 </Modal.Content>
             </Modal>
