@@ -392,7 +392,7 @@ const App: React.FC = (): JSX.Element => {
             </ul>
           </div>
         </Modal.Content>
-        <Modal.Action passive onClick={() => setInfo(false)}></Modal.Action>
+        <Modal.Action passive onClick={() => setInfo(false)}>Close</Modal.Action>
       </Modal>
     </div>
   );
