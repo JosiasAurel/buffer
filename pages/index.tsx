@@ -10,16 +10,12 @@ import toast from "react-hot-toast";
 
 import styles from "../styles/index.module.css";
 
-import { useRouter } from "next/router";
-
 const App: React.FC = (): JSX.Element => {
 
-    const router = useRouter();
-
-    const [newSecret, setNewSecret] = React.useState<string>("");
     const [newUserModal, setNewUserModal] = React.useState<boolean>(false);
     const [settings, setSettings] = React.useState<boolean>(false);
     const [secret, setSecret] = React.useState<string>("");
+    const [newSecret, setNewSecret] = React.useState<string>(secret);
     const [buffer, setBuffer] = React.useState<string>("");
     const [buffers, setBuffers] = React.useState<Array<string>>([]);
     const [createBuffer, setCreateBuffer] = React.useState<boolean>(false);
@@ -80,6 +76,7 @@ const App: React.FC = (): JSX.Element => {
         // console.log("localSecret", localSecret);
         if (localSecret) {
             setSecret(localSecret);
+            setNewSecret(localSecret);
             getBuffers();
         } else {
             setNewUserModal(true);
@@ -199,6 +196,8 @@ const App: React.FC = (): JSX.Element => {
                         <Button auto onClick={_ => {
                             const { newSecurityKey } = createKey();
                             localStorage.setItem("secret", newSecurityKey);
+                            setSecret(newSecurityKey);
+                            setNewSecret(newSecurityKey);
                             refreshBuffers();
                             setNewUserModal(false); // close modal
                         }}>
