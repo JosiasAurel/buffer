@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Note, Tag, Button, Textarea, Fieldset, Spacer, Modal, Input, useClipboard } from "@geist-ui/react";
-import { AlertCircle, Moon, Sun, Settings, Plus } from "@geist-ui/react-icons";
+import { AlertCircle, RefreshCcw, Settings, Plus } from "@geist-ui/react-icons";
 
 import { createKey, hashKey } from "../utils/cryptoman";
 import { makeRequest } from "../utils/request";
@@ -10,15 +10,19 @@ import toast from "react-hot-toast";
 
 import styles from "../styles/index.module.css";
 
+import { useRouter } from "next/router";
+
 const App: React.FC = (): JSX.Element => {
+
+    const router = useRouter();
+
     const [newSecret, setNewSecret] = React.useState<string>("");
     const [newUserModal, setNewUserModal] = React.useState<boolean>(false);
     const [settings, setSettings] = React.useState<boolean>(false);
     const [secret, setSecret] = React.useState<string>("");
     const [buffer, setBuffer] = React.useState<string>("");
-    const [buffers, setBuffers] = React.useState<Array<any>>([]);
+    const [buffers, setBuffers] = React.useState<Array<string>>([]);
     const [createBuffer, setCreateBuffer] = React.useState<boolean>(false);
-    const [toggleChange, setToggleChange] = React.useState<boolean>(false);
     const [info, setInfo] = React.useState<boolean>(false);
 
     // clipboard
@@ -26,8 +30,7 @@ const App: React.FC = (): JSX.Element => {
 
     function saveBuffer() {
         const hashedKey = hashKey(secret);
-        toast.promise(makeRequest("/api/save", { buffer, key: hashedKey })
-            .then(_ => getBuffers()), {
+        toast.promise(makeRequest(`/api/save`, { buffer, key: hashedKey }), {
             loading: "Bufferizing...",
             success: "Buffered",
             error: "Failed to buffer"
@@ -41,13 +44,17 @@ const App: React.FC = (): JSX.Element => {
         const hashedKey = hashKey(secret);
         const newBuffers = await makeRequest("/api/buffers", { key: hashedKey });
         const clientBuffers: Array<string> = [];
-        newBuffers?.fetchedBuffers.map(buffer => clientBuffers.push(buffer.buffer));
+        newBuffers?.fetchedBuffers.forEach(buffer => clientBuffers.push(buffer.buffer));
 
-        const allEqual: boolean = clientBuffers.every((buffer, idx) => buffer === buffers[idx]);
+        /* console.log("clientBuffers", clientBuffers);
+        console.log("buffers", buffers); */
+        const allEqual: boolean = clientBuffers.length === buffers.length && clientBuffers.every((buffer_, idx) => (buffer_ === buffers[idx]));
 
         if (!allEqual) {
+            console.log("Not equal")
+            console.table({ clientBuffers, buffers });
             toast("New Buffer");
-            return;
+            return setBuffers(clientBuffers);
         }
         return;
     }
@@ -68,19 +75,17 @@ const App: React.FC = (): JSX.Element => {
         });
     }
 
-    // setInterval(() => getBuffers(), 5000); // fetch all notes every 5 seconds
     React.useEffect(() => {
         const localSecret = localStorage.getItem("secret") ?? undefined;
-        console.log("localSecret", localSecret);
+        // console.log("localSecret", localSecret);
         if (localSecret) {
             setSecret(localSecret);
             getBuffers();
         } else {
             setNewUserModal(true);
         }
-        setNewSecret(localStorage.getItem("secret"));
-    }, [toggleChange]);
-
+        // setNewSecret(localStorage.getItem("secret"));
+    }, []);
 
     return (
         <div>
@@ -91,6 +96,7 @@ const App: React.FC = (): JSX.Element => {
                     }}> Buffer.link </Tag>
                 </span>
                 <div className={styles.controls}>
+                    <Button onClick={_e => refreshBuffers()} iconRight={<RefreshCcw />} auto scale={0.35} px={0.6} />
                     <Button onClick={_e => setCreateBuffer(!createBuffer)} iconRight={<Plus />} auto scale={0.35} px={0.6} />
                     <Button onClick={() => {
                         setSettings(true);
@@ -106,9 +112,9 @@ const App: React.FC = (): JSX.Element => {
                     <main>
                         {createBuffer ?
                             <>
-                                <Fieldset>
+                                <Fieldset width={"80vw"}>
                                     <Fieldset.Subtitle>
-                                        <Textarea value={buffer} onChange={e => setBuffer(e.target.value)}>
+                                        <Textarea width="100%" rows={5} value={buffer} onChange={e => setBuffer(e.target.value)}>
 
                                         </Textarea>
                                     </Fieldset.Subtitle>
@@ -142,9 +148,9 @@ const App: React.FC = (): JSX.Element => {
                         {createBuffer ?
 
                             <>
-                                <Fieldset>
+                                <Fieldset width={"80vw"}>
                                     <Fieldset.Subtitle>
-                                        <Textarea value={buffer} onChange={e => setBuffer(e.target.value)}>
+                                        <Textarea width="100%" rows={5} value={buffer} onChange={e => setBuffer(e.target.value)}>
 
                                         </Textarea>
                                     </Fieldset.Subtitle>
@@ -184,7 +190,7 @@ const App: React.FC = (): JSX.Element => {
                     }}>
                         <Button auto onClick={_ => {
                             localStorage.setItem("secret", newSecret);
-                            setToggleChange(!toggleChange);
+                            refreshBuffers();
                             setNewUserModal(false); // close modal
                         }}>
                             Connect
@@ -193,7 +199,7 @@ const App: React.FC = (): JSX.Element => {
                         <Button auto onClick={_ => {
                             const { newSecurityKey } = createKey();
                             localStorage.setItem("secret", newSecurityKey);
-                            setToggleChange(!toggleChange);
+                            refreshBuffers();
                             setNewUserModal(false); // close modal
                         }}>
                             Create
@@ -217,7 +223,7 @@ const App: React.FC = (): JSX.Element => {
                     <Spacer />
                     <Button onClick={_ => {
                         localStorage.setItem("secret", newSecret);
-                        setToggleChange(!toggleChange);
+                        refreshBuffers();
                         setSettings(false); // close modal
                     }}>
                         Save
