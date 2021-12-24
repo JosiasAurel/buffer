@@ -1,0 +1,1 @@
+{"id":"668ebb1c-23d4-457f-af7a-89e0bb4b20d4","space":963,"runtime":"nodejs14.x","name":"cleaner","path":"t2mc3a","project":"a0tqlrt1","account":"144798365827","region":"eu-central-1","deps":["deta@^1.0.1"],"envs":null,"public":true,"log_level":"debug","cron":"1 day"}
