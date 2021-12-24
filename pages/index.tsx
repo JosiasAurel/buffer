@@ -152,8 +152,11 @@ const App: React.FC = (): JSX.Element => {
             {/* new user modal */}
             <Modal visible={newUserModal} onClose={() => setNewUserModal(false)}>
                 <Modal.Title>
-                    Are you new ? Otherwise, enter your secret below
+                    Are you new ?
                 </Modal.Title>
+                <Modal.Subtitle>
+                    Enter your existing key to connect to a buffer or click create for a new buffer.
+                </Modal.Subtitle>
                 <Modal.Content style={{
                     display: "flex",
                     flexDirection: "column",
@@ -162,13 +165,29 @@ const App: React.FC = (): JSX.Element => {
                 }}>
                     <Input clearable placeholder="Secret" value={newSecret} onChange={e => setNewSecret(e.target.value)} />
                     <Spacer />
-                    <Button onClick={_ => {
-                        localStorage.setItem("secret", newSecret);
-                        setToggleChange(!toggleChange);
-                        setNewUserModal(false); // close modal
+                    <div style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "space-evenly",
+                        alignItems: "center"
                     }}>
-                        Save
-                    </Button>
+                        <Button auto onClick={_ => {
+                            localStorage.setItem("secret", newSecret);
+                            setToggleChange(!toggleChange);
+                            setNewUserModal(false); // close modal
+                        }}>
+                            Connect
+                        </Button>
+                        <Spacer />
+                        <Button auto onClick={_ => {
+                            const { newSecurityKey } = createKey();
+                            localStorage.setItem("secret", newSecurityKey);
+                            setToggleChange(!toggleChange);
+                            setNewUserModal(false); // close modal
+                        }}>
+                            Create
+                        </Button>
+                    </div>
                 </Modal.Content>
             </Modal>
 
