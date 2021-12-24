@@ -380,6 +380,15 @@ const App: React.FC = (): JSX.Element => {
             contribute to improve this tool, you can find the entire codebase{" "}
             <a href="https://github.com/JosiasAurel/buffer">here</a>.
           </p>
+
+          <div>
+            <h2 style={{ textAlign: "center" }}>Mini Guide</h2>
+            <ul>
+              <li>Click on a buffer to copy its content</li>
+              <li>You can change the secret to connect to another buffer in settings.</li>
+              <li>Create a new buffer by clicking the plus icon</li>
+            </ul>
+          </div>
         </Modal.Content>
       </Modal>
     </div>
