@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "correct": "set NODE_OPTIONS=--openssl-legacy-provider",
-    "dev": "next dev"
+    "dev": "next dev",
+    "prettify": "yarn prettier --write ."
   },
   "repository": {
     "type": "git",
