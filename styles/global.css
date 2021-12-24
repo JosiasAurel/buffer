@@ -1,9 +1,13 @@
 * {
-    box-sizing: border-box;
-    transition: all 0.2s ease-in-out;
-    font-family: sans-serif;
+  box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+  font-family: sans-serif;
 }
 
 body {
-    margin: 0 auto;
+  margin: 0 auto;
+}
+
+a {
+  color: black;
 }
