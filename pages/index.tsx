@@ -61,7 +61,7 @@ const App: React.FC = (): JSX.Element => {
         } else {
             setNewUserModal(true);
         }
-
+        setNewSecret(localStorage.getItem("secret"));
     }, [toggleChange]);
 
 
@@ -99,7 +99,9 @@ const App: React.FC = (): JSX.Element => {
                         {buffers.map((buffer, idx) => {
                             return (
                                 <>
-                                    <Note onClick={_ => {
+                                    <Note style={{
+                                        width: "80vw"
+                                    }} onClick={_ => {
                                         copy(buffer);
                                         toast("Copied to clipboard");
                                     }} label={false} key={idx}>
@@ -138,8 +140,14 @@ const App: React.FC = (): JSX.Element => {
                 <Modal.Title>
                     Are you new ? Otherwise, enter your secret below
                 </Modal.Title>
-                <Modal.Content>
+                <Modal.Content style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-evenly",
+                    alignItems: "center"
+                }}>
                     <Input clearable placeholder="Secret" value={newSecret} onChange={e => setNewSecret(e.target.value)} />
+                    <Spacer />
                     <Button onClick={_ => {
                         localStorage.setItem("secret", newSecret);
                         setToggleChange(!toggleChange);
