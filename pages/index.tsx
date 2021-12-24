@@ -256,10 +256,6 @@ const App: React.FC = (): JSX.Element => {
                         If you found any issues and want to file a bug, or you
                         just want to contribute to improve this tool, you can find the entire codebase <a href="https://github.com/JosiasAurel/buffer">here</a>.
                     </p>
-
-                    <p>
-                        Time is in UTC format.
-                    </p>
                 </Modal.Content>
             </Modal>
         </div >
