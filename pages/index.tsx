@@ -32,11 +32,13 @@ const App: React.FC = (): JSX.Element => {
     }
 
     function getBuffers() {
+        const secret = localStorage.getItem("secret");
         const hashedKey = hashKey(secret);
         toast.promise(makeRequest("/api/buffers", { key: hashedKey })
-            .then((result: Array<any>) => {
+            .then((result: any) => {
+                console.log("result", result);
                 const clientBuffers: Array<string> = [];
-                result.map(buffer => clientBuffers.push(buffer.buffer));
+                result?.fetchedBuffers.map(buffer => clientBuffers.push(buffer.buffer));
                 console.log("clientBuffers", clientBuffers);
                 setBuffers(clientBuffers);
             }), {
@@ -48,15 +50,14 @@ const App: React.FC = (): JSX.Element => {
 
     // setInterval(() => getBuffers(), 5000); // fetch all notes every 5 seconds
     React.useEffect(() => {
-        const secret = localStorage.getItem("secret") ?? undefined;
-
-        if (secret !== undefined) {
-            setSecret(secret);
+        const localSecret = localStorage.getItem("secret") ?? undefined;
+        console.log("localSecret", localSecret);
+        if (localSecret) {
+            setSecret(localSecret);
+            getBuffers();
         } else {
             setNewUserModal(true);
         }
-
-        getBuffers();
 
     }, []);
 
@@ -72,13 +73,17 @@ const App: React.FC = (): JSX.Element => {
             </header>
 
             <div className={styles.notes}>
+                <Spacer h={3} />
                 {buffers.length > 0 ?
                     <main>
-                        {buffers.map((notes, idx) => {
+                        {buffers.map((buffer, idx) => {
                             return (
-                                <Card key={idx}>
-                                    {notes}
-                                </Card>
+                                <>
+                                    <Card key={idx}>
+                                        {buffer}
+                                    </Card>
+                                    <Spacer />
+                                </>
                             )
                         })}
                         <div>
@@ -149,8 +154,14 @@ const App: React.FC = (): JSX.Element => {
                 <Modal.Title>
                     Settings
                 </Modal.Title>
-                <Modal.Content>
+                <Modal.Content style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-evenly",
+                    alignItems: "center"
+                }}>
                     <Input clearable placeholder="Secret" value={newSecret} onChange={e => setNewSecret(e.target.value)} />
+                    <Spacer />
                     <Button onClick={_ => {
                         localStorage.setItem("secret", newSecret);
                         setToggleChange(!toggleChange);
