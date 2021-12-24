@@ -4,12 +4,12 @@ const deta = Deta(DETA_PROJECT);
 
 const buffers = deta.Base("buffers");
 
-app.lib.cron(async event => {
-    const fetchedBuffers = await buffers.fetch();
+app.lib.cron(async (event) => {
+  const fetchedBuffers = await buffers.fetch();
 
-    fetchedBuffers.items.forEach(item => {
-        buffers.delete(item.key);
-    });
+  fetchedBuffers.items.forEach((item) => {
+    buffers.delete(item.key);
+  });
 });
 
 module.exports = app;

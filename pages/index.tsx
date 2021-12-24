@@ -37,11 +37,16 @@ const App: React.FC = (): JSX.Element => {
 
   function saveBuffer() {
     const hashedKey = hashKey(secret);
-    toast.promise(makeRequest(`/api/save`, { buffer, key: hashedKey }), {
-      loading: "Bufferizing...",
-      success: "Buffered",
-      error: "Failed to buffer",
-    });
+    toast.promise(
+      makeRequest(`/api/save`, { buffer, key: hashedKey }).then((_) =>
+        setBuffer("")
+      ),
+      {
+        loading: "Bufferizing...",
+        success: "Buffered",
+        error: "Failed to buffer",
+      }
+    );
     setCreateBuffer(false);
     getBuffers();
   }
@@ -145,7 +150,7 @@ const App: React.FC = (): JSX.Element => {
             }}
           >
             {" "}
-            Buffer.link{" "}
+            Buffered.link{" "}
           </Tag>
         </span>
         <div className={styles.controls}>
