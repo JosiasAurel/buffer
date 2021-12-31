@@ -222,6 +222,7 @@ const App: React.FC = (): JSX.Element => {
                   <Note
                     style={{
                       width: "80vw",
+                      overflow: "auto"
                     }}
                     onClick={(_) => {
                       copy(buffer);
