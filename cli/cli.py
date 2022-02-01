@@ -1,5 +1,5 @@
 from buffer import Buffer
-from rich import text, panel, print
+from rich import text, panel, print, style
 import argparse
 
 parser = argparse.ArgumentParser(description="Your Text Buffer")
@@ -28,3 +28,9 @@ if args.get("list") != None:
 
 if args.get("save") != None:
     result = buffer.buffer(args.get("save"))
+    content = panel.Panel(
+        text.Text(f"{buffer.get('buffer')}", justify="left"))
+    content_key = text.Text(
+        f"{buffer.get('key')}", justify="left", style=style.Style(underline=True))
+    print(content)
+    print(content_key)

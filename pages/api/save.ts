@@ -20,7 +20,7 @@ export default async function saveNote(req: NextApiRequest, res: NextApiResponse
         owner: key,
         date: new Date().toUTCString(),
       });
-      return res.json({ status: "Success", key: item.key });
+      return res.json({ status: "Success", key: item.key, buffer: item.buffer });
     } catch (err) {
       return res.json({ status: "Failed" });
     }
