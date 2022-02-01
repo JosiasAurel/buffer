@@ -11,19 +11,18 @@ type SaveNote = {
   key: string
 }
 
-export default function saveNote(req: NextApiRequest, res: NextApiResponse) {
+export default async function saveNote(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     const { buffer, key }: SaveNote = req.body;
     try {
-      buffers.put({
+      const item = await buffers.put({
         buffer,
         owner: key,
         date: new Date().toUTCString(),
       });
-      res.json({ status: "Success" });
+      return res.json({ status: "Success", key: item.key });
     } catch (err) {
-      res.json({ status: "Failed" });
+      return res.json({ status: "Failed" });
     }
-    return;
   }
 }

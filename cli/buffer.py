@@ -40,8 +40,3 @@ class Buffer:
             return response.get("fetchedBuffers")
         except:
             return False
-
-
-buff = Buffer("sj3c3")
-# print("Created" if buff.buffer("yolo") else "Failed")
-print(buff.load_buffer())
