@@ -6,10 +6,14 @@ const deta = Deta(process.env.NEXT_PUBLIC_DETA_PROJECT_KEY);
 
 const buffers = deta.Base("buffers");
 
+type SaveNote = {
+  buffer: string
+  key: string
+}
+
 export default function saveNote(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
-    const { buffer, key } = req.body;
-
+    const { buffer, key }: SaveNote = req.body;
     try {
       buffers.put({
         buffer,
@@ -22,6 +26,4 @@ export default function saveNote(req: NextApiRequest, res: NextApiResponse) {
     }
     return;
   }
-
-  res.send("Save Function");
 }
