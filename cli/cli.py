@@ -1,17 +1,20 @@
 from buffer import Buffer
 from rich import text, panel, print, style
 import argparse
+import json
 
 parser = argparse.ArgumentParser(description="Your Text Buffer")
 
 parser.add_argument("--save", nargs=1, type=str,
-                    help="The text to be buffered")
+                    help="Buffers a piece of text. Takes as argument the text to be buffered. Use quotes for long text.")
 parser.add_argument("--file", nargs=1,
-                    help="The file containing the text to buffer")
+                    help="Used to buffer a small file. Takes as the full path to the file e.g ./hello.txt ")
 parser.add_argument(
     "--list", action='store_const', const=True, help="List the entire buffer stored using the secret")
 parser.add_argument(
     "--get", nargs=1, help="Get data from a specific buffer id")
+parser.add_argument(
+    "--get-file", nargs=1, help="Get a buffered file from a specific buffer id")
 
 args = parser.parse_args()
 
@@ -19,6 +22,8 @@ args = vars(args)
 # struct
 # {'save': None, 'file': None, 'list': 'yolo', 'get': None}
 buffer = Buffer("sj3c3")
+
+print(args)
 
 if args.get("list"):
     print(args.get("list") is not None)
@@ -46,4 +51,8 @@ if args.get("file"):
     result = buffer.buffer_file(args.get("file"))
     content = panel.Panel(
         text.Text(f"File Key : {result[1]}", justify="left"))
+    print(content)
+
+if args.get("get_file"):
+    result = buffer.get_file(args.get("get_file"))
     print(content)

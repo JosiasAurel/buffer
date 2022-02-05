@@ -98,6 +98,7 @@ class Buffer:
         try:
             with open(f"{filename}.{filetype}", "wb") as new_file:
                 new_file.write(content)
+            print(f"Saved under : {filename}.{filetype}")
         except:
             print("Failed to create file")
         return
