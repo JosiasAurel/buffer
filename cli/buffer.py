@@ -40,3 +40,13 @@ class Buffer:
             return response.get("fetchedBuffers")
         except:
             return False
+
+    def getBuffer(self, bufferKey: str):
+        payload = {
+            "bufferKey": bufferKey
+        }
+
+        response = requests.post(self.buffers_url, payload).content.decode()
+        response = json.loads(response)
+
+        return response

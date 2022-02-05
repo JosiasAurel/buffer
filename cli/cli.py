@@ -37,3 +37,10 @@ if args.get("save"):
     content = panel.Panel(
         text.Text(f"{result[1].get('buffer')} \n \nkey : {result[1].get('key')}", justify="left"))
     print(content)
+
+if args.get("get"):
+    result = buffer.getBuffer(args.get("get"))
+    print(result)
+    content = panel.Panel(
+        text.Text(f"{result.get('buffer')} \n \nkey : {result.get('key')}", justify="left"))
+    print(content)
