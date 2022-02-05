@@ -15,7 +15,6 @@ export default async function fetchBuffer(
 
     try {
       const fetchedBuffer = await buffers.get(bufferKey);
-      fetchedBuffer.buffer = JSON.parse(fetchedBuffer.buffer as any);
       res.json(fetchedBuffer);
     } catch (err) {
       res.json({

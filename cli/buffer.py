@@ -56,19 +56,19 @@ class Buffer:
 
     def buffer_file(self, filepath: str):
         filepath = filepath[0]
-        print(filepath)
+        # print(filepath)
         file_size = os.path.getsize(filepath) / 10**6
 
         if file_size <= 1:
             with open(filepath, "rb") as file:
                 content = file.read()
-
+            data = {
+                "type": filepath.split(".")[-1],  # file extension
+                "content": content.decode(),
+                "size": file_size
+            }
             payload = {
-                "buffer": {
-                    "type": filepath.split(".")[-1],  # file extension
-                    "content": content.decode(),
-                    "size": file_size
-                },
+                "buffer": json.dumps(data),
                 "key": self.hashedSecret,
                 "date": datetime.datetime.utcnow()
             }

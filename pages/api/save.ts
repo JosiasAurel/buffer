@@ -18,9 +18,9 @@ export default async function saveNote(
   if (req.method === "POST") {
     const { buffer, key }: SaveNote = req.body;
     try {
-      console.log(JSON.stringify(buffer));
+      console.log(JSON.parse(buffer));
       const item = await buffers.put({
-        buffer: JSON.stringify(buffer),
+        buffer,
         owner: key,
         date: new Date().toUTCString(),
       });
