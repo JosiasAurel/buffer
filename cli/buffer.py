@@ -9,8 +9,9 @@ class Buffer:
         self.secret = secret
         self.hashedSecret = sha256(secret.encode(
             "utf-8")).hexdigest()
-        self.save_url = "https://buffered.link/api/save"
-        self.buffers_url = "https://buffered.link/api/buffers"
+        self.root_uri = "https://beta.buffered.link"
+        self.save_url = f"{self.root_uri}/api/save"
+        self.buffers_url = f"{self.root_uri}/api/buffers"
         return
 
     def buffer(self, text: str):
