@@ -23,8 +23,6 @@ args = vars(args)
 # {'save': None, 'file': None, 'list': 'yolo', 'get': None}
 buffer = Buffer("sj3c3")
 
-print(args)
-
 if args.get("list"):
     print(args.get("list") is not None)
     buffers = buffer.load_buffer()
@@ -54,5 +52,4 @@ if args.get("file"):
     print(content)
 
 if args.get("get_file"):
-    result = buffer.get_file(args.get("get_file"))
-    print(content)
+    buffer.get_file(args.get("get_file")[0])

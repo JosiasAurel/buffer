@@ -3,6 +3,7 @@ from hashlib import sha256
 import datetime
 import json
 import os
+import math
 
 
 class Buffer:
@@ -59,7 +60,7 @@ class Buffer:
         # print(filepath)
         file_size = os.path.getsize(filepath) / 10**6
 
-        if file_size <= 1:
+        if file_size <= 1.5:
             with open(filepath, "rb") as file:
                 content = file.read()
             data = {
@@ -90,15 +91,19 @@ class Buffer:
 
         response = requests.post(self.get_buffer, payload).content.decode()
         response = json.loads(response)
-        print("Writing File")
-        file = response.get("buffer")
-        filename = file.get("key")
-        filetype = file.get("type")
-        content = file.get("content")
+        file = json.loads(response.get("buffer"))
+        print(file)
+        filename: str = response.get("key")
+        filetype: str = file.get("type")
+        content: str = file.get("content")
+        filesize = file.get("size")
         try:
+            print("Working...")
             with open(f"{filename}.{filetype}", "wb") as new_file:
-                new_file.write(content)
-            print(f"Saved under : {filename}.{filetype}")
+                bytes_content = content.encode("utf-8")
+                new_file.write(bytes(bytes_content))
+            print(
+                f"Saved under : {filename}.{filetype}, Size : {math.floor(filesize)}mb ")
         except:
             print("Failed to create file")
         return
