@@ -9,17 +9,19 @@ parser.add_argument("--save", nargs=1, type=str,
 parser.add_argument("--file", nargs=1,
                     help="The file containing the text to buffer")
 parser.add_argument(
-    "--list", action='store_false', help="List the entire buffer stored using the secret")
+    "--list", action='store_const', const=True, help="List the entire buffer stored using the secret")
 parser.add_argument(
     "--get", nargs=1, help="Get data from a specific buffer id")
 
 args = parser.parse_args()
 
 args = vars(args)
+# struct
 # {'save': None, 'file': None, 'list': 'yolo', 'get': None}
 buffer = Buffer("sj3c3")
 
-if args.get("list") != None:
+if args.get("list"):
+    print(args.get("list") is not None)
     buffers = buffer.load_buffer()
     if buffers.__len__() > 0:
         for buffer in buffers:
@@ -29,11 +31,9 @@ if args.get("list") != None:
     else:
         print("Empty Buffer")
 
-if args.get("save") != None:
+if args.get("save"):
     result = buffer.buffer(args.get("save"))
+    # print(result)
     content = panel.Panel(
-        text.Text(f"{buffer.get('buffer')}", justify="left"))
-    content_key = text.Text(
-        f"{buffer.get('key')}", justify="left", style=style.Style(underline=True))
+        text.Text(f"{result[1].get('buffer')} \n \nkey : {result[1].get('key')}", justify="left"))
     print(content)
-    print(content_key)

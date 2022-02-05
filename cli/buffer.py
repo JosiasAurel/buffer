@@ -24,8 +24,8 @@ class Buffer:
         response = requests.post(self.save_url, payload).content.decode()
         response = json.loads(response)
         if response["status"] == "Success":
-            return True
-        return False
+            return True, response
+        return False,
 
     def load_buffer(self):
         # load buffers payload
