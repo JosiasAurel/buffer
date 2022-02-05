@@ -21,10 +21,13 @@ buffer = Buffer("sj3c3")
 
 if args.get("list") != None:
     buffers = buffer.load_buffer()
-    for buffer in buffers:
-        content = panel.Panel(
-            text.Text(f"{buffer.get('buffer')}", justify="left"))
-        print(content)
+    if buffers.__len__() > 0:
+        for buffer in buffers:
+            content = panel.Panel(
+                text.Text(f"{buffer.get('buffer')}", justify="left"))
+            print(content)
+    else:
+        print("Empty Buffer")
 
 if args.get("save") != None:
     result = buffer.buffer(args.get("save"))
