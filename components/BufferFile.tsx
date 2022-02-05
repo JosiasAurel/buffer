@@ -1,6 +1,7 @@
 
 import React, { useState } from "react";
 import { Card, Text, Button } from "@geist-ui/react";
+import { nanoid } from "nanoid";
 
 type BufferedFile = {
     type: string
@@ -29,7 +30,7 @@ const BufferFile: React.FC<Props> = ({ buffer }): JSX.Element => {
                 File Type : {file.type}
             </Text>
             <Text> Size : {Math.floor(file.size)}mb </Text>
-            <a href={dlURL} download>
+            <a href={dlURL} download={`${nanoid()}.${file.type}`}>
                 <Button>
                     Download
                 </Button>
