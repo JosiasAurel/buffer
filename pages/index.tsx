@@ -375,7 +375,7 @@ const App: React.FC = (): JSX.Element => {
           </p>
           <p>
             Buffered.link is a simple tool that allows you to share text between
-            connected by simply pasting the text in here. <br />
+            connected devices by simply pasting the text in here. <br />
           </p>
           <p>
             This tool is fully open source. <br />
