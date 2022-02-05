@@ -2,6 +2,7 @@ import requests
 from hashlib import sha256
 import datetime
 import json
+import os
 
 
 class Buffer:
@@ -52,3 +53,29 @@ class Buffer:
         response = json.loads(response)
 
         return response
+
+    def buffer_file(self, filepath: str):
+        file_size = os.path.getsize(filepath) / 10**6
+
+        if file_size <= 1:
+            with open(filepath, "rb") as file:
+                content = file.read()
+
+            payload = {
+                "file": {
+                    "type": filepath.split(".")[-1],  # file extension
+                    "content": content,
+                    "size": file_size
+                }
+            }
+
+            response = requests.post(self.save_url, payload).content.decode()
+            response = json.loads(response)
+            if response["status"] == "Success":
+                return True, response.get("key")
+            return False,
+        else:
+            print("File too large. Max size is 1.5mb")
+            print(
+                "Consider using a service like https://transfer.sh for uploading large files")
+            return
