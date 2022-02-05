@@ -222,7 +222,7 @@ const App: React.FC = (): JSX.Element => {
                   <Note
                     style={{
                       width: "80vw",
-                      overflow: "auto"
+                      overflow: "auto",
                     }}
                     onClick={(_) => {
                       copy(buffer);
@@ -325,7 +325,9 @@ const App: React.FC = (): JSX.Element => {
             </Button>
           </div>
         </Modal.Content>
-        <Modal.Action passive onClick={() => setNewUserModal(false)}>Close</Modal.Action>
+        <Modal.Action passive onClick={() => setNewUserModal(false)}>
+          Close
+        </Modal.Action>
       </Modal>
 
       {/* settings modal */}
@@ -356,7 +358,9 @@ const App: React.FC = (): JSX.Element => {
             Save
           </Button>
         </Modal.Content>
-        <Modal.Action passive onClick={() => setSettings(false)}>Close</Modal.Action>
+        <Modal.Action passive onClick={() => setSettings(false)}>
+          Close
+        </Modal.Action>
       </Modal>
 
       {/* info modal */}
@@ -388,12 +392,17 @@ const App: React.FC = (): JSX.Element => {
             <h2 style={{ textAlign: "center" }}>Mini Guide</h2>
             <ul>
               <li>Click on a buffer to copy its content</li>
-              <li>You can change the secret to connect to another buffer in settings.</li>
+              <li>
+                You can change the secret to connect to another buffer in
+                settings.
+              </li>
               <li>Create a new buffer by clicking the plus icon</li>
             </ul>
           </div>
         </Modal.Content>
-        <Modal.Action passive onClick={() => setInfo(false)}>Close</Modal.Action>
+        <Modal.Action passive onClick={() => setInfo(false)}>
+          Close
+        </Modal.Action>
       </Modal>
     </div>
   );

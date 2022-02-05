@@ -17,9 +17,9 @@ export default async function fetchBuffer(
       const fetchedBuffer = await buffers.get(bufferKey);
 
       res.json(fetchedBuffer);
-    } catch(err) {
+    } catch (err) {
       res.json({
-        status: "Failed"
+        status: "Failed",
       });
     }
   }

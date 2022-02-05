@@ -12,6 +12,7 @@ class Buffer:
         self.root_uri = "https://beta.buffered.link"
         self.save_url = f"{self.root_uri}/api/save"
         self.buffers_url = f"{self.root_uri}/api/buffers"
+        self.get_buffer = f"{self.root_uri}/api/get"
         return
 
     def buffer(self, text: str):
@@ -47,7 +48,7 @@ class Buffer:
             "bufferKey": bufferKey
         }
 
-        response = requests.post(self.buffers_url, payload).content.decode()
+        response = requests.post(self.get_buffer, payload).content.decode()
         response = json.loads(response)
 
         return response

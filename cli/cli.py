@@ -40,7 +40,4 @@ if args.get("save"):
 
 if args.get("get"):
     result = buffer.getBuffer(args.get("get"))
-    print(result)
-    content = panel.Panel(
-        text.Text(f"{result.get('buffer')} \n \nkey : {result.get('key')}", justify="left"))
-    print(content)
+    print(result.get("buffer"))
