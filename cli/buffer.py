@@ -62,11 +62,13 @@ class Buffer:
                 content = file.read()
 
             payload = {
-                "file": {
+                "buffer": {
                     "type": filepath.split(".")[-1],  # file extension
                     "content": content,
                     "size": file_size
-                }
+                },
+                "key": self.hashedSecret,
+                "date": datetime.datetime.utcnow()
             }
 
             response = requests.post(self.save_url, payload).content.decode()
@@ -79,3 +81,22 @@ class Buffer:
             print(
                 "Consider using a service like https://transfer.sh for uploading large files")
             return
+
+    def get_file(self, bufferKey: str):
+        payload = {
+            "bufferKey": bufferKey
+        }
+
+        response = requests.post(self.get_buffer, payload).content.decode()
+        response = json.loads(response)
+        print("Writing File")
+        file = response.get("buffer")
+        filename = file.get("key")
+        filetype = file.get("type")
+        content = file.get("content")
+        try:
+            with open(f"{filename}.{filetype}", "wb") as new_file:
+                new_file.write(content)
+        except:
+            print("Failed to create file")
+        return
