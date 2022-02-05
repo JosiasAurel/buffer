@@ -7,7 +7,7 @@ const deta = Deta(process.env.NEXT_PUBLIC_DETA_PROJECT_KEY);
 const buffers = deta.Base("buffers");
 
 type SaveNote = {
-  buffer: string;
+  buffer: string|any;
   key: string;
 };
 
@@ -18,6 +18,7 @@ export default async function saveNote(
   if (req.method === "POST") {
     const { buffer, key }: SaveNote = req.body;
     try {
+      console.log(buffer);
       const item = await buffers.put({
         buffer,
         owner: key,

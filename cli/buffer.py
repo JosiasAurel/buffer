@@ -55,6 +55,8 @@ class Buffer:
         return response
 
     def buffer_file(self, filepath: str):
+        filepath = filepath[0]
+        print(filepath)
         file_size = os.path.getsize(filepath) / 10**6
 
         if file_size <= 1:
@@ -64,13 +66,12 @@ class Buffer:
             payload = {
                 "buffer": {
                     "type": filepath.split(".")[-1],  # file extension
-                    "content": content,
+                    "content": content.decode(),
                     "size": file_size
                 },
                 "key": self.hashedSecret,
                 "date": datetime.datetime.utcnow()
             }
-
             response = requests.post(self.save_url, payload).content.decode()
             response = json.loads(response)
             if response["status"] == "Success":

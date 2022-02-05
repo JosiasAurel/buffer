@@ -41,3 +41,9 @@ if args.get("save"):
 if args.get("get"):
     result = buffer.getBuffer(args.get("get"))
     print(result.get("buffer"))
+
+if args.get("file"):
+    result = buffer.buffer_file(args.get("file"))
+    content = panel.Panel(
+        text.Text(f"File Key : {result[1]}", justify="left"))
+    print(content)
