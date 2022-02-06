@@ -1,7 +1,8 @@
+#!/usr/bin/env python3
 from buffer import Buffer
 from rich import text, panel, print, style
 import argparse
-import json
+
 
 parser = argparse.ArgumentParser(description="Your Text Buffer")
 
