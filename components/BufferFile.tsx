@@ -18,7 +18,7 @@ const BufferFile: React.FC<Props> = ({ buffer }): JSX.Element => {
 
   // set the data uri of file on mount
   React.useEffect(() => {
-    const data = new Blob([JSON.stringify(file.content.trim())], {
+    const data = new Blob([file.content.trim()], {
       type: `application/${file.type}`,
     });
 
