@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Card, Text, Button } from "@geist-ui/react";
-import { nanoid } from "nanoid";
 
 type BufferedFile = {
   type: string;

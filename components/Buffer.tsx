@@ -37,8 +37,7 @@ const Buffer: React.FC<Props> = ({ buffer }): JSX.Element => {
       {buffer}
     </Note>
   );
-}
-
+};
 
 /* 
   if (typeof JSON.parse(buffer) === "object") {
