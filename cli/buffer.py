@@ -58,7 +58,7 @@ class Buffer:
 
     def buffer_file(self, filepath: str, file_name: str):
         file_size = os.path.getsize(filepath) / 10**6
-        if file_size <= 1.5:
+        if file_size <= 2:
             with open(filepath, "rb") as file:
                 content = file.read()
             data = {
@@ -78,7 +78,7 @@ class Buffer:
                 return True, response.get("key")
             return False,
         else:
-            print("File too large. Max size is 1.5mb")
+            print("File too large. Max size is 2mb")
             print(
                 "Consider using a service like https://transfer.sh for uploading large files")
             return
