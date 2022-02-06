@@ -17,15 +17,15 @@ export default async function saveNote(
 ) {
   if (req.method === "POST") {
     const { buffer, key }: SaveNote = req.body;
-    console.log(buffer);
+    // console.log(buffer);
     try {
-      console.log(buffer);
+      // console.log(buffer);
       const item = await buffers.put({
         buffer,
         owner: key,
         date: new Date().toUTCString(),
       });
-      console.log(item);
+      // console.log(item);
       return res.json({
         status: "Success",
         key: item.key,

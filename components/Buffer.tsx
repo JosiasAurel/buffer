@@ -9,35 +9,40 @@ type Props = {
 };
 const Buffer: React.FC<Props> = ({ buffer }): JSX.Element => {
   const { copy } = useClipboard();
+  let isSerialisable = false;
 
   try {
     if (typeof JSON.parse(buffer) === "object") {
-      return <BufferFile buffer={buffer} />;
-    } else {
-      return (
-        <Note
-          style={{
-            width: "80vw",
-            overflow: "auto",
-          }}
-          onClick={(_) => {
-            copy(buffer);
-            toast("Copied to clipboard");
-          }}
-          label={false}
-        >
-          {buffer}
-        </Note>
-      );
+      isSerialisable = true;
     }
-  } catch (err) {
+  } catch (error) {
     // pass
   }
 
-  /* 
-    if (typeof JSON.parse(buffer) === "object") {
-    return <BufferFile buffer={buffer} />
-    } */
-};
+  if (isSerialisable) {
+    return <BufferFile buffer={buffer} />;
+  }
+  return (
+    <Note
+      style={{
+        width: "80vw",
+        overflow: "auto",
+      }}
+      onClick={(_) => {
+        copy(buffer);
+        toast("Copied to clipboard");
+      }}
+      label={false}
+    >
+      {buffer}
+    </Note>
+  );
+}
+
+
+/* 
+  if (typeof JSON.parse(buffer) === "object") {
+  return <BufferFile buffer={buffer} />
+  } */
 
 export default Buffer;
