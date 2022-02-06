@@ -17,15 +17,17 @@ const BufferFile: React.FC<Props> = ({ buffer }): JSX.Element => {
   const [dlURL, setDLURL] = useState<string>("");
   const file: BufferedFile = JSON.parse(buffer);
 
-  function downloadFile(): void {
-    const data = new Blob([JSON.stringify(file.content)], {
+  // set the data uri of file on mount
+  React.useEffect(() => {
+    const data = new Blob([JSON.stringify(file.content.trim())], {
       type: `application/${file.type}`,
     });
 
     const newDLURL = URL.createObjectURL(data);
 
     setDLURL(newDLURL);
-  }
+  }, []);
+
   return (
     <Card>
       <Text>File Type : {file.type}</Text>
