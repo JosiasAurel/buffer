@@ -27,6 +27,7 @@ class Buffer:
         # send request
         response = requests.post(self.save_url, payload).content.decode()
         response = json.loads(response)
+        print(response)
         if response["status"] == "Success":
             return True, response
         return False,
