@@ -21,7 +21,7 @@ args = parser.parse_args()
 args = vars(args)
 # struct
 # {'save': None, 'file': None, 'list': 'yolo', 'get': None}
-buffer = Buffer("sj3c3")
+buffer = Buffer()
 
 
 if args.get("list"):

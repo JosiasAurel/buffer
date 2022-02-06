@@ -7,9 +7,9 @@ import math
 
 
 class Buffer:
-    def __init__(self, secret: str):
-        self.secret = secret
-        self.hashedSecret = sha256(secret.encode(
+    def __init__(self):
+        self.secret = os.getenv("BFL_SECRET")
+        self.hashedSecret = sha256(self.secret.encode(
             "utf-8")).hexdigest()
         self.root_uri = "https://beta.buffered.link"
         self.save_url = f"{self.root_uri}/api/save"
