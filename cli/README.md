@@ -22,14 +22,14 @@ You will find many tutorials teaching about how to set environment variables on 
 - To create a new buffer, use the `--save` flag with the cli like below;
 
   ```shell
-  bf --save myName
+  bfdl --save myName
   ```
 
   The CLI will store `myName` in your buffer as is.
   Llonger pieces of text, should be wrapped in quotes
 
   ```shell
-  bf --save "A really really long piece of text"
+  bfdl --save "A really really long piece of text"
   ```
 
 - Get a specific buffer
@@ -39,14 +39,14 @@ You will find many tutorials teaching about how to set environment variables on 
   > Note : You cannot use this command to retrieve buffered files
 
   ```shell
-  bf --get ID
+  bfdl --get ID
   ```
 
 - List all the content of your buffer
   Use the `--list` flag to list the contents of your buffer
 
   ```shell
-  bf --list
+  bfdl --list
   ```
 
 - To buffer a file, use the `--file` flag
@@ -57,11 +57,11 @@ You will find many tutorials teaching about how to set environment variables on 
   > Note : The max size of a file you can buffer is 2mb
 
   ```shell
-  bf --file hello.txt name
+  bfdl --file hello.txt name
   ```
 
 - Download a buffered file with the `--get-file` flag
   ```shell
-  bf --get-file ID
+  bfdl --get-file ID
   ```
   This will write the buffered file in the current directory.
