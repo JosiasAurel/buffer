@@ -51,7 +51,7 @@ if args.get("get"):
     print(result.get("buffer"))
 
 if args.get("file"):
-    print(args.get("file"))
+    # print(args.get("file"))
     filepath = args.get("file")[0]
     name = args.get("file")[1]
     result = buffer.buffer_file(filepath, name)

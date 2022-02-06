@@ -55,9 +55,7 @@ class Buffer:
 
         return response
 
-    def buffer_file(self, filepath: str, filename: str):
-        filepath = filepath[0]
-        # print(filepath)
+    def buffer_file(self, filepath: str, file_name: str):
         file_size = os.path.getsize(filepath) / 10**6
         if file_size <= 1.5:
             with open(filepath, "rb") as file:
@@ -66,7 +64,7 @@ class Buffer:
                 "type": filepath.split(".")[-1],  # file extension
                 "content": content.decode(),
                 "size": file_size,
-                "name": filename
+                "name": file_name
             }
             payload = {
                 "buffer": json.dumps(data),
