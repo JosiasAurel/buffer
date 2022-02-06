@@ -12,7 +12,7 @@ import {
   useClipboard,
 } from "@geist-ui/react";
 import { AlertCircle, RefreshCcw, Settings, Plus } from "@geist-ui/react-icons";
-
+import Buffer from "../components/Buffer";
 import { createKey, hashKey } from "../utils/cryptoman";
 import { makeRequest } from "../utils/request";
 
@@ -81,7 +81,7 @@ const App: React.FC = (): JSX.Element => {
       makeRequest("/api/buffers", { key: hashedKey }).then((result: any) => {
         // console.log("result", result);
         const clientBuffers: Array<string> = [];
-        result?.fetchedBuffers.map((buffer) =>
+        result?.fetchedBuffers.map((buffer: BufferType) =>
           clientBuffers.push(buffer.buffer)
         );
         // console.log("clientBuffers", clientBuffers);
@@ -217,22 +217,11 @@ const App: React.FC = (): JSX.Element => {
             )}
             <Spacer />
             {buffers.map((buffer, idx) => {
+              console.log(buffer);
               return (
                 <>
-                  <Note
-                    style={{
-                      width: "80vw",
-                      overflow: "auto"
-                    }}
-                    onClick={(_) => {
-                      copy(buffer);
-                      toast("Copied to clipboard");
-                    }}
-                    label={false}
-                    key={idx}
-                  >
-                    {buffer}
-                  </Note>
+                  <Buffer buffer={buffer} />
+
                   <Spacer />
                 </>
               );
@@ -325,7 +314,9 @@ const App: React.FC = (): JSX.Element => {
             </Button>
           </div>
         </Modal.Content>
-        <Modal.Action passive onClick={() => setNewUserModal(false)}>Close</Modal.Action>
+        <Modal.Action passive onClick={() => setNewUserModal(false)}>
+          Close
+        </Modal.Action>
       </Modal>
 
       {/* settings modal */}
@@ -356,7 +347,9 @@ const App: React.FC = (): JSX.Element => {
             Save
           </Button>
         </Modal.Content>
-        <Modal.Action passive onClick={() => setSettings(false)}>Close</Modal.Action>
+        <Modal.Action passive onClick={() => setSettings(false)}>
+          Close
+        </Modal.Action>
       </Modal>
 
       {/* info modal */}
@@ -375,7 +368,7 @@ const App: React.FC = (): JSX.Element => {
           </p>
           <p>
             Buffered.link is a simple tool that allows you to share text between
-            connected by simply pasting the text in here. <br />
+            connected devices by simply pasting the text in here. <br />
           </p>
           <p>
             This tool is fully open source. <br />
@@ -388,12 +381,17 @@ const App: React.FC = (): JSX.Element => {
             <h2 style={{ textAlign: "center" }}>Mini Guide</h2>
             <ul>
               <li>Click on a buffer to copy its content</li>
-              <li>You can change the secret to connect to another buffer in settings.</li>
+              <li>
+                You can change the secret to connect to another buffer in
+                settings.
+              </li>
               <li>Create a new buffer by clicking the plus icon</li>
             </ul>
           </div>
         </Modal.Content>
-        <Modal.Action passive onClick={() => setInfo(false)}>Close</Modal.Action>
+        <Modal.Action passive onClick={() => setInfo(false)}>
+          Close
+        </Modal.Action>
       </Modal>
     </div>
   );

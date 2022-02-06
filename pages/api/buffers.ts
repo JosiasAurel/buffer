@@ -7,10 +7,9 @@ const deta = Deta(process.env.NEXT_PUBLIC_DETA_PROJECT_KEY);
 const buffers = deta.Base("buffers");
 
 type SaveNote = {
-  buffer: string
-  key: string
-}
-
+  buffer: string;
+  key: string;
+};
 
 export default async function fetchNotes(
   req: NextApiRequest,
@@ -23,9 +22,9 @@ export default async function fetchNotes(
       const fetchedBuffers = await (await buffers.fetch({ owner: key })).items;
 
       res.json({ fetchedBuffers });
-    } catch(err) {
+    } catch (err) {
       res.json({
-        status: "Failed"
+        status: "Failed",
       });
     }
   }
