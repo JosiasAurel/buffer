@@ -33,7 +33,7 @@ const BufferFile: React.FC<Props> = ({ buffer }): JSX.Element => {
       <Text>File Type : {file.type}</Text>
       <Text> Size : {Math.floor(file.size)}mb </Text>
       <Text>filename : {file.name}</Text>
-      <a href={dlURL} download={`${nanoid()}.${file.type}`}>
+      <a href={dlURL} download={`${file.name}.${file.type}`}>
         <Button>Download</Button>
       </a>
     </Card>
