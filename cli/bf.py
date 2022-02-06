@@ -2,7 +2,7 @@
 from buffer import Buffer
 from rich import text, panel, print, style
 import argparse
-
+import json
 
 parser = argparse.ArgumentParser(description="Your Text Buffer")
 
@@ -26,13 +26,19 @@ buffer = Buffer()
 
 
 if args.get("list"):
-    print(args.get("list") is not None)
+    # print(args.get("list") is not None)
     buffers = buffer.load_buffer()
     if buffers.__len__() > 0:
         for buffer in buffers:
-            content = panel.Panel(
-                text.Text(f"{buffer.get('buffer')}", justify="left"))
-            print(content)
+            try:
+                obj = json.loads(buffer.get("buffer"))
+                content = panel.Panel(
+                    text.Text(f"{obj.get('name')}.{obj.get('type')} \nKey : {buffer.get('key')}", justify="left"))
+                print(content)
+            except:
+                content = panel.Panel(
+                    text.Text(f"{buffer.get('buffer')}", justify="left"))
+                print(content)
     else:
         print("Empty Buffer")
 
