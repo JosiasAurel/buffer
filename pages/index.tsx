@@ -12,7 +12,7 @@ import {
   useClipboard,
 } from "@geist-ui/react";
 import { AlertCircle, RefreshCcw, Settings, Plus } from "@geist-ui/react-icons";
-
+import Buffer from "../components/Buffer";
 import { createKey, hashKey } from "../utils/cryptoman";
 import { makeRequest } from "../utils/request";
 
@@ -81,7 +81,7 @@ const App: React.FC = (): JSX.Element => {
       makeRequest("/api/buffers", { key: hashedKey }).then((result: any) => {
         // console.log("result", result);
         const clientBuffers: Array<string> = [];
-        result?.fetchedBuffers.map((buffer) =>
+        result?.fetchedBuffers.map((buffer: BufferType) =>
           clientBuffers.push(buffer.buffer)
         );
         // console.log("clientBuffers", clientBuffers);
@@ -217,22 +217,11 @@ const App: React.FC = (): JSX.Element => {
             )}
             <Spacer />
             {buffers.map((buffer, idx) => {
+              console.log(buffer);
               return (
                 <>
-                  <Note
-                    style={{
-                      width: "80vw",
-                      overflow: "auto",
-                    }}
-                    onClick={(_) => {
-                      copy(buffer);
-                      toast("Copied to clipboard");
-                    }}
-                    label={false}
-                    key={idx}
-                  >
-                    {buffer}
-                  </Note>
+                  <Buffer buffer={buffer} />
+
                   <Spacer />
                 </>
               );
