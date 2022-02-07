@@ -1,7 +1,0 @@
-README.md
-setup.py
-Buffered.link.egg-info/PKG-INFO
-Buffered.link.egg-info/SOURCES.txt
-Buffered.link.egg-info/dependency_links.txt
-Buffered.link.egg-info/requires.txt
-Buffered.link.egg-info/top_level.txt
