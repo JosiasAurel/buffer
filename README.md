@@ -47,3 +47,7 @@ First make sure you have [pipenv](https://pypi.org/project/pipenv/) installed.
 Navigate to the `cli` directory and run `pipenv shell`.
 
 Once in the virtual environment, run `pipenv install` to install all the required dependencies.
+
+To build the CLI, run `pyinstaller --onefile bfdl`
+This command will build the CLI and output the binary in the `dist` directory.
+You can then add the CLI to `PATH` environment variable and use it.
