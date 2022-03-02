@@ -371,7 +371,9 @@ const App: React.FC = (): JSX.Element => {
             connected devices by simply pasting the text in here. <br />
           </p>
           <p>
-            If you want to use this tool in the command line, you can find it from the latest release <a href="https://github.com/JosiasAurel/buffer/releases">here</a>.
+            If you want to use this tool in the command line, you can find it
+            from the latest release{" "}
+            <a href="https://github.com/JosiasAurel/buffer/releases">here</a>.
           </p>
           <p>
             This tool is fully open source. <br />
