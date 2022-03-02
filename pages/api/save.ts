@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { Deta } from "deta";
+import { nanoid } from "nanoid";
 
 const deta = Deta(process.env.NEXT_PUBLIC_DETA_PROJECT_KEY);
 
@@ -20,11 +21,15 @@ export default async function saveNote(
     // console.log(buffer);
     try {
       // console.log(buffer);
-      const item = await buffers.put({
-        buffer,
-        owner: key,
-        date: new Date().toUTCString(),
-      });
+      const oneDay: number = 24 * 60 * 60; // a day in seconds
+      const item = await buffers.put(
+        {
+          buffer,
+          owner: key,
+        },
+        nanoid(5),
+        { expireIn: oneDay }
+      );
       // console.log(item);
       return res.json({
         status: "Success",
