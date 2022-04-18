@@ -26,6 +26,7 @@ class BufferedLinkDoc extends Document {
           `,
             }}
           />
+          <script data-ad-client="ca-pub-1317113335117660" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
         </Head>
         <body>
           <Main />
