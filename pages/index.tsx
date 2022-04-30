@@ -1,7 +1,6 @@
 import React from "react";
 
 import {
-  Note,
   Tag,
   Button,
   Textarea,
@@ -36,7 +35,7 @@ const App: React.FC = (): JSX.Element => {
   const { copy } = useClipboard();
 
   function saveBuffer() {
-    const hashedKey = hashKey(secret);
+    const hashedKey = hashKey(secret.split(",")[0].trim());
     toast.promise(
       makeRequest(`/api/save`, { buffer, key: hashedKey }).then((_) =>
         setBuffer("")
@@ -53,11 +52,18 @@ const App: React.FC = (): JSX.Element => {
 
   async function refreshBuffers() {
     const secret = localStorage.getItem("secret");
-    const hashedKey = hashKey(secret);
-    const newBuffers = await makeRequest("/api/buffers", { key: hashedKey });
+    const hashedKeys = secret.split(",")
+      .map(key => key.trim())
+      .map(key => hashKey(key));
+    const newBuffers = await makeRequest("/api/buffers", { keys: hashedKeys });
     const clientBuffers: Array<string> = [];
-    newBuffers?.fetchedBuffers.forEach((buffer) =>
-      clientBuffers.push(buffer.buffer)
+    // console.log(newBuffers);
+    newBuffers?.forEach(fetchedBuffer => {
+      console.log(fetchedBuffer);
+      fetchedBuffer.forEach(buffer => {
+        clientBuffers.push(buffer.buffer);
+      });
+    }
     );
 
     /* console.log("clientBuffers", clientBuffers);
@@ -76,13 +82,21 @@ const App: React.FC = (): JSX.Element => {
   }
   function getBuffers() {
     const secret = localStorage.getItem("secret");
-    const hashedKey = hashKey(secret);
+    const hashedKeys = secret.split(",")
+      .map(key => key.trim())
+      .map(key => hashKey(key));
+    // console.log(hashedKeys);
+
     toast.promise(
-      makeRequest("/api/buffers", { key: hashedKey }).then((result: any) => {
+      makeRequest("/api/buffers", { key: hashedKeys }).then((result: any) => {
         // console.log("result", result);
         const clientBuffers: Array<string> = [];
-        result?.fetchedBuffers.map((buffer: BufferType) =>
-          clientBuffers.push(buffer.buffer)
+        console.log(result);
+        result?.forEach(fetchedBuffer => {
+          fetchedBuffer.forEach((buffer: BufferType) => {
+            clientBuffers.push(buffer.buffer)
+          });
+        }
         );
         // console.log("clientBuffers", clientBuffers);
         setBuffers(clientBuffers);
@@ -391,6 +405,13 @@ const App: React.FC = (): JSX.Element => {
                 settings.
               </li>
               <li>Create a new buffer by clicking the plus icon</li>
+              <li>
+                New: You can now add more than one secret key.
+                Each key has to be separated by commas or else it won't work.
+                Example : 34nd2, fwfge3
+                The first key will be used as the main key to save your buffer text.
+                For the other keys, only the content of their buffer will be fetched and they may not be used to save anything.
+              </li>
             </ul>
           </div>
         </Modal.Content>
