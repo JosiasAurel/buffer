@@ -27,6 +27,7 @@
   "dependencies": {
     "@geist-ui/core": "^2.3.8",
     "@geist-ui/react-icons": "^1.0.1",
+    "@prisma/client": "^4.1.0",
     "deta": "^1.1.0",
     "inter-ui": "^3.19.3",
     "nanoid": "^3.3.1",
