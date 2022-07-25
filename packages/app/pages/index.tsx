@@ -52,19 +52,19 @@ const App: React.FC = (): JSX.Element => {
 
   async function refreshBuffers() {
     const secret = localStorage.getItem("secret");
-    const hashedKeys = secret.split(",")
-      .map(key => key.trim())
-      .map(key => hashKey(key));
+    const hashedKeys = secret
+      .split(",")
+      .map((key) => key.trim())
+      .map((key) => hashKey(key));
     const newBuffers = await makeRequest("/api/buffers", { keys: hashedKeys });
     const clientBuffers: Array<string> = [];
     // console.log(newBuffers);
-    newBuffers?.forEach(fetchedBuffer => {
+    newBuffers?.forEach((fetchedBuffer) => {
       console.log(fetchedBuffer);
-      fetchedBuffer.forEach(buffer => {
+      fetchedBuffer.forEach((buffer) => {
         clientBuffers.push(buffer.buffer);
       });
-    }
-    );
+    });
 
     /* console.log("clientBuffers", clientBuffers);
         console.log("buffers", buffers); */
@@ -82,9 +82,10 @@ const App: React.FC = (): JSX.Element => {
   }
   function getBuffers() {
     const secret = localStorage.getItem("secret");
-    const hashedKeys = secret.split(",")
-      .map(key => key.trim())
-      .map(key => hashKey(key));
+    const hashedKeys = secret
+      .split(",")
+      .map((key) => key.trim())
+      .map((key) => hashKey(key));
     // console.log(hashedKeys);
 
     toast.promise(
@@ -92,12 +93,11 @@ const App: React.FC = (): JSX.Element => {
         // console.log("result", result);
         const clientBuffers: Array<string> = [];
         console.log(result);
-        result?.forEach(fetchedBuffer => {
+        result?.forEach((fetchedBuffer) => {
           fetchedBuffer.forEach((buffer: BufferType) => {
-            clientBuffers.push(buffer.buffer)
+            clientBuffers.push(buffer.buffer);
           });
-        }
-        );
+        });
         // console.log("clientBuffers", clientBuffers);
         setBuffers(clientBuffers);
       }),
@@ -406,11 +406,12 @@ const App: React.FC = (): JSX.Element => {
               </li>
               <li>Create a new buffer by clicking the plus icon</li>
               <li>
-                New: You can now add more than one secret key.
-                Each key has to be separated by commas or else it won't work.
-                Example : 34nd2, fwfge3
-                The first key will be used as the main key to save your buffer text.
-                For the other keys, only the content of their buffer will be fetched and they may not be used to save anything.
+                New: You can now add more than one secret key. Each key has to
+                be separated by commas or else it won't work. Example : 34nd2,
+                fwfge3 The first key will be used as the main key to save your
+                buffer text. For the other keys, only the content of their
+                buffer will be fetched and they may not be used to save
+                anything.
               </li>
             </ul>
           </div>

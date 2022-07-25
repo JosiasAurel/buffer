@@ -6,12 +6,12 @@ declare type BufferType = {
 };
 
 declare type Buffer = {
-  owner: string
-  publicOwner: string
-  type: string
-  date: Date
-  content: string
-  expiryDate: Date
-  isPublic: boolean
-  id: string
-}
+  owner: string;
+  publicOwner: string;
+  type: string;
+  date: Date;
+  content: string;
+  expiryDate: Date;
+  isPublic: boolean;
+  id: string;
+};
