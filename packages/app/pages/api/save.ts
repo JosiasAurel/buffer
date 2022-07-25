@@ -4,7 +4,7 @@ import { nanoid } from "nanoid";
 
 const prisma = new PrismaClient();
 
-export default async function saveNote(
+export default async function saveBuffer(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -32,11 +32,10 @@ export default async function saveNote(
       res.json({
         status: true,
       });
-
     } catch (error) {
       res.json({
         status: false,
-        error: error
+        error: error,
       });
     }
   }
