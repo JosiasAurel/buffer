@@ -1,44 +1,31 @@
 import { NextApiRequest, NextApiResponse } from "next";
-
-import { Deta } from "deta";
+import { PrismaClient } from "@prisma/client";
 import { nanoid } from "nanoid";
 
-const deta = Deta(process.env.NEXT_PUBLIC_DETA_PROJECT_KEY);
-
-const buffers = deta.Base("buffers");
-
-type SaveNote = {
-  buffer: string;
-  key: string;
-};
+const prisma = new PrismaClient();
 
 export default async function saveNote(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method === "POST") {
-    const { buffer, key }: SaveNote = req.body;
-    // console.log(buffer);
-    try {
-      // console.log(buffer);
-      const oneDay: number = 24 * 60 * 60; // a day in seconds
-      const item = await buffers.put(
-        {
-          buffer,
-          owner: key,
-        },
-        nanoid(5),
-        { expireIn: oneDay }
-      );
-      // console.log(item);
-      return res.json({
-        status: "Success",
-        key: item.key,
-        buffer: item.buffer,
-      });
-    } catch (err) {
-      console.log(err);
-      return res.json({ status: "Failed" });
-    }
+  if (req.method === "post") {
+    const { type, ownerHash, content, isPublic, publicKey } = req.body;
+
+    const currentDate = new Date();
+    const expiryDate = new Date().setDate( currentDate.getDate() + 1 );
+
+    // write the buffer to the database
+    prisma.buffer.create({
+      data: {
+        content: content, 
+        isPublic: isPublic,
+        type: type,
+        publicOwner: publicKey,
+        date: currentDate,
+        owner: ownerHash,
+        id: nanoid(5),
+        expiryDate: new Date(expiryDate)
+      }
+    })
   }
 }

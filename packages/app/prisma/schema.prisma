@@ -11,10 +11,12 @@ datasource db {
 }
 
 model Buffer {
-  id          String   @id
-  owner       String
+  owner       String   @id
   publicOwner String
   type        String
   date        DateTime
-  public      Boolean
+  content     String
+  expiryDate  DateTime
+  isPublic    Boolean
+  id          String
 }
