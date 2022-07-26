@@ -11,6 +11,7 @@ datasource db {
 }
 
 model Buffer {
+  id          String   @id
   owner       String
   publicOwner String
   type        String
@@ -18,5 +19,4 @@ model Buffer {
   content     String
   expiryDate  DateTime
   isPublic    Boolean
-  id          String   @id
 }

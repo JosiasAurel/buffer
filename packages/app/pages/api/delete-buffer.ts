@@ -11,10 +11,7 @@ export default async function fetchBuffers(
 
   try {
     await prisma.buffer.delete({
-      select: {
-        id: bufferId,
-      },
-      where: {},
+      where: { id: bufferId },
     });
 
     res.json({
