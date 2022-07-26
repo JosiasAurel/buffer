@@ -8,7 +8,7 @@ import {
   Badge,
   Button,
   Spacer,
-  Tooltip
+  Tooltip,
 } from "@geist-ui/core";
 import { RefreshCw } from "@geist-ui/react-icons";
 import toast from "react-hot-toast";
@@ -22,7 +22,7 @@ function RemainingTime(expiryDate: number): string {
   const difference = expiryTime - new Date(new Date().toUTCString()).getTime();
 
   const hours = Math.abs(difference / (1000 * 60 * 60));
-  const minutes = Math.abs(difference / (1000 * 60) - (hours * 60));
+  const minutes = Math.abs(difference / (1000 * 60) - hours * 60);
 
   return `${hours.toFixed(0)}h ${minutes.toFixed(0)}mins`;
 }
@@ -33,7 +33,7 @@ const Buffer: React.FC<Props> = ({
   type,
   isPublic,
   editHandler,
-  expiryDate
+  expiryDate,
 }): JSX.Element => {
   const { copy } = useClipboard();
 
@@ -60,20 +60,22 @@ const Buffer: React.FC<Props> = ({
       </div>
 
       <Divider />
-      <div style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        alignItems: "center",
-        width: "100%",
-      }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          alignItems: "center",
+          width: "100%",
+        }}
+      >
         <span
           style={{
             display: "flex",
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            width: "100%"
+            width: "100%",
           }}
         >
           <Badge type={isPublic ? "success" : "default"}>
@@ -104,21 +106,18 @@ const Buffer: React.FC<Props> = ({
             flexDirection: "row",
             justifyContent: "space-between",
             alignItems: "center",
-            width: "100%"
+            width: "100%",
           }}
         >
           <Badge type={"default"}>
             Expires In : {RemainingTime(expiryDate)}
           </Badge>
           <Tooltip
-            text={"Refresh. (This will reset this buffer's countdown to 24 hours.)"}
+            text={
+              "Refresh. (This will reset this buffer's countdown to 24 hours.)"
+            }
           >
-            <Button
-              auto
-              icon={<RefreshCw />}
-              scale={0.35}
-              px={0.6}
-            />
+            <Button auto icon={<RefreshCw />} scale={0.35} px={0.6} />
           </Tooltip>
         </span>
       </div>
