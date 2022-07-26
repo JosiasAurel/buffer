@@ -101,6 +101,7 @@ const App: React.FC = (): JSX.Element => {
             content={item.content}
             type={item.type}
             date={item.date}
+            isPublic={item.isPublic}
           />
         ))}
       </div>
