@@ -86,7 +86,11 @@ const App: React.FC = (): JSX.Element => {
       publicKey,
     };
 
-    toast.promise(createBuffer(payload).then((result: BResponse) => setBuffers([...buffers, result.buffer])), {
+    toast.promise(createBuffer(payload).then((result: BResponse) => {
+      setBuffers([...buffers, result.buffer]);
+      crSetVisible(false);
+      setContent(""); setBufferType("text"); setIsPublic(false);
+    }), {
       success: "Buffer Saved",
       error: "Failed to save buffer",
       loading: "Saving...",

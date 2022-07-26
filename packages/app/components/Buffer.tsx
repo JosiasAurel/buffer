@@ -22,9 +22,11 @@ const Buffer: React.FC<Props> = ({ content, date, type, isPublic }): JSX.Element
             {content}
           </Text>
           :
-          <Code style={{ overflow: "scroll" }} block my={0}>
-            {content}
-          </Code>
+          <Text my={0}>
+            <Code classic={true} style={{ overflow: "scroll" }} block >
+              {content}
+            </Code>
+          </Text>
       }
       <Divider />
       <span style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly", alignItems: "center" }}>
