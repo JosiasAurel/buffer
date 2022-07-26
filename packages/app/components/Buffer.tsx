@@ -9,6 +9,7 @@ import {
   Button,
   Spacer,
   Tooltip,
+  Note,
 } from "@geist-ui/core";
 import { RefreshCw } from "@geist-ui/react-icons";
 import toast from "react-hot-toast";
@@ -51,7 +52,9 @@ const Buffer: React.FC<Props> = ({
         }}
       >
         {type === "text" ? (
-          <Text style={{ overflow: "scroll" }}>{content}</Text>
+          <Note label={false} style={{ overflow: "scroll" }}>
+            {content}
+          </Note>
         ) : (
           <Code classic={true} style={{ overflow: "scroll" }} block>
             {content}
@@ -129,7 +132,9 @@ const Buffer: React.FC<Props> = ({
                     loading: "Refreshing...",
                     error: "Failed to Refresh",
                   })
-                  .then((_) => setTimeout(() => window.location.reload(), 1500));
+                  .then((_) =>
+                    setTimeout(() => window.location.reload(), 1500)
+                  );
               }}
             />
           </Tooltip>
