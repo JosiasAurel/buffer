@@ -15,11 +15,11 @@ const Buffer: React.FC<Props> = ({ content, date, type }): JSX.Element => {
     }}>
       {
         type === "text" ?
-          <Text>
+          <Text style={{ overflow: "scroll" }}>
             {content}
           </Text>
           :
-          <Code block>
+          <Code style={{ overflow: "scroll" }} block my={0}>
             {content}
           </Code>
       }

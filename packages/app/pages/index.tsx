@@ -93,7 +93,7 @@ const App: React.FC = (): JSX.Element => {
     });
   }
   return (
-    <div>
+    <div className={styles.buffersPage}>
       <div className={styles.buffers}>
         {buffers.map(item => (
           <Buffer

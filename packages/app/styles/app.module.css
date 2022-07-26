@@ -13,7 +13,11 @@
 }
 
 .buffers {
+  overflow: scroll;
+  width: 98%;
+  height: 100%;
   display: grid;
-  grid-template-columns: repeat(1fr, 4);
+  grid-template-columns: repeat(4, 1fr);
   grid-gap: 1em;
+  margin: 1em;
 }
