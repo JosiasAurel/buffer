@@ -139,8 +139,8 @@ const App: React.FC = (): JSX.Element => {
           }
         ),
         {
-          success: "Buffer Saved",
-          error: "Failed to save buffer",
+          success: "Buffer Updated",
+          error: "Failed to update buffer",
           loading: "Saving...",
         }
       )

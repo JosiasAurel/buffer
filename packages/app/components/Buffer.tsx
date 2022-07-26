@@ -7,7 +7,10 @@ import {
   Divider,
   Badge,
   Button,
+  Spacer,
+  Tooltip
 } from "@geist-ui/core";
+import { RefreshCw } from "@geist-ui/react-icons";
 import toast from "react-hot-toast";
 import { deleteBuffer } from "../utils/handlers";
 
@@ -19,6 +22,8 @@ const Buffer: React.FC<Props> = ({
   type,
   isPublic,
   editHandler,
+  date,
+  expiryDate
 }): JSX.Element => {
   const { copy } = useClipboard();
 
@@ -45,35 +50,68 @@ const Buffer: React.FC<Props> = ({
       </div>
 
       <Divider />
-      <span
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-evenly",
-          alignItems: "center",
-        }}
-      >
-        <Badge type={isPublic ? "success" : "default"}>
-          {isPublic ? "Public" : "Private"}
-        </Badge>
-        <Button auto scale={0.35} onClick={(_) => editHandler()}>
-          Edit
-        </Button>
-        <Button
-          type="error"
-          auto
-          scale={0.35}
-          onClick={(_) => {
-            toast.promise(deleteBuffer(id), {
-              loading: "Deleting...",
-              success: "Deleted",
-              error: "Failed",
-            });
+      <div style={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        alignItems: "center",
+        width: "100%",
+      }}>
+        <span
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: "100%"
           }}
         >
-          Delete
-        </Button>
-      </span>
+          <Badge type={isPublic ? "success" : "default"}>
+            {isPublic ? "Public" : "Private"}
+          </Badge>
+          <Button auto scale={0.35} onClick={(_) => editHandler()}>
+            Edit
+          </Button>
+          <Button
+            type="error"
+            auto
+            scale={0.35}
+            onClick={(_) => {
+              toast.promise(deleteBuffer(id), {
+                loading: "Deleting...",
+                success: "Deleted",
+                error: "Failed",
+              });
+            }}
+          >
+            Delete
+          </Button>
+        </span>
+        <Spacer />
+        <span
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: "100%"
+          }}
+        >
+          <Badge type={"default"}>
+            Expires In : 24h
+          </Badge>
+          <Tooltip
+            text={"Refresh. (This will reset this buffer's countdown to 24 hours.)"}
+          >
+            <Button
+              auto
+              icon={<RefreshCw />}
+              scale={0.35}
+              px={0.6}
+            />
+          </Tooltip>
+        </span>
+      </div>
     </Card>
   );
 };
