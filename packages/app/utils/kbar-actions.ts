@@ -9,11 +9,19 @@ const actions = [
     perform: () => modalActions.createModalVisible(true),
   },
   {
-    id: "about",
-    name: "About",
-    shortcut: ["a"],
-    keywords: "about who maker builder",
-    perform: () => alert("Made by Josias"),
+    id: "github",
+    name: "GitHub",
+    shortcut: ["gh"],
+    keywords: "Source Code",
+    perform: () =>
+      window.location.replace("https://github.com/JosiasAurel/buffer"),
+  },
+  {
+    id: "home",
+    name: "Home",
+    shortcut: ["h"],
+    keywords: "home",
+    perform: () => window.location.replace("/"),
   },
 ];
 

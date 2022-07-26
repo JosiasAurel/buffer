@@ -186,9 +186,21 @@ const App: React.FC = (): JSX.Element => {
         </Grid.Container>
       </div>
       <Card className={styles.fab}>
-        <Button auto scale={0.35} px={0.6} icon={<Plus />} onClick={_ => setVisible(true)} />
+        <Button
+          auto
+          scale={0.35}
+          px={0.6}
+          icon={<Plus />}
+          onClick={(_) => setVisible(true)}
+        />
         <Spacer />
-        <Button auto scale={0.35} px={0.6} icon={<Home />} onClick={_ => router.replace("/")} />
+        <Button
+          auto
+          scale={0.35}
+          px={0.6}
+          icon={<Home />}
+          onClick={(_) => router.replace("/")}
+        />
         <Spacer />
         <Link href="https://github.com/JosiasAurel/buffer">
           <Button auto scale={0.35} px={0.6} icon={<Github />} />
