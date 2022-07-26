@@ -11,7 +11,7 @@ import { makeKeyPair, hashKey } from "../utils/keys";
 import styles from "../styles/app.module.css";
 import Buffer from "../components/Buffer";
 import toast from "react-hot-toast";
-import { createBuffer } from "../utils/handlers";
+import { createBuffer, fetchBuffers } from "../utils/handlers";
 
 let modalActions: any = {};
 
@@ -49,6 +49,11 @@ const App: React.FC = (): JSX.Element => {
       setPublicKey(publicKey);
     }
   }, []);
+
+  useEffect(() => {
+    // omit public key when the owner is identified
+    const buffers = fetchBuffers(hashKey(secret));
+  }, [secret, publicKey]);
 
   // create buffer state variables
   const [content, setContent] = useState<string>("");

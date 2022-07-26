@@ -9,19 +9,19 @@ export default async function fetchBuffers(
 ) {
   const { ownerHash, publicKey } = req.body;
 
+  console.log(ownerHash);
   try {
     const buffers = await prisma.buffer.findMany({
-      where: {
-        OR: [
-          {
+      where: ownerHash
+        ? {
             owner: ownerHash,
-          },
-          {
+          }
+        : {
             publicOwner: publicKey,
           },
-        ],
-      },
     });
+
+    console.log(buffers);
 
     res.json({
       status: true,

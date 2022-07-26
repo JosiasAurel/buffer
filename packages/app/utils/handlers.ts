@@ -27,4 +27,19 @@ function createBuffer(buffer: BufferParam): Promise<BResponse | string> {
   });
 }
 
-export { createBuffer };
+function fetchBuffers(
+  ownerHash?: string,
+  publicKey?: string
+): Promise<BResponse | string> {
+  return new Promise((resolve, reject) => {
+    makeRequest("/api/buffers", { ownerHash, publicKey })
+      .then((result) => {
+        if (result.status) {
+          resolve(result);
+        } else reject("Failed");
+      })
+      .catch((_) => reject("Failed"));
+  });
+}
+
+export { createBuffer, fetchBuffers };
