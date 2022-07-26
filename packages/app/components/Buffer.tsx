@@ -23,9 +23,9 @@ function RemainingTime(expiryDate: number): string {
   const difference = expiryTime - new Date(new Date().toUTCString()).getTime();
 
   const hours = Math.abs(difference / (1000 * 60 * 60));
-  const minutes = Math.abs(difference / (1000 * 60) - hours * 60);
+  const minutes = Math.abs(difference / (1000 * 60));
 
-  return `${hours.toFixed(0)}h ${minutes.toFixed(0)}mins`;
+  return hours > 0 ? `${hours.toFixed(0)}h` : `${minutes.toFixed(0)}mins`;
 }
 
 const Buffer: React.FC<Props> = ({
