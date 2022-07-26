@@ -50,9 +50,20 @@ const App: React.FC = (): JSX.Element => {
     }
   }, []);
 
+  // buffers container
+  const [buffers, setBuffers] = useState<any[]>([]);
+
   useEffect(() => {
-    // omit public key when the owner is identified
-    const buffers = fetchBuffers(hashKey(secret));
+    if (secret.length > 0 && publicKey.length > 0) {
+      // omit public key when the owner is identified
+      fetchBuffers(hashKey(secret))
+        .then((result: BResponse) => {
+          setBuffers(result.buffers as any[]);
+          toast.success("Fetched Buffers");
+        })
+        .catch(e_ => toast.error("Failed to fetch buffer"));
+
+    }
   }, [secret, publicKey]);
 
   // create buffer state variables
@@ -83,7 +94,11 @@ const App: React.FC = (): JSX.Element => {
   }
   return (
     <div>
-      <div className={styles.buffers}></div>
+      <div className={styles.buffers}>
+        {buffers.map(item => (
+          <Buffer buffer={item.content} />
+        ))}
+      </div>
       <button onClick={(_) => crSetVisible(true)}>Create Buffer</button>
       <Modal {...crBindings}>
         <Modal.Title>Create Buffer</Modal.Title>

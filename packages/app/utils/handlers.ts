@@ -15,7 +15,7 @@ async function makeRequest(
   return result;
 }
 
-function createBuffer(buffer: BufferParam): Promise<BResponse | string> {
+function createBuffer(buffer: BufferParam): Promise<BResponse | BResponse[] | string> {
   return new Promise((resolve, reject) => {
     makeRequest("/api/save", buffer)
       .then((result) => {
