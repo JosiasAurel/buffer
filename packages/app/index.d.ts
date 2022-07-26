@@ -21,4 +21,5 @@ declare type BResponse = {
   status: boolean;
   error?: any;
   buffers?: any[];
+  buffer?: any;
 };

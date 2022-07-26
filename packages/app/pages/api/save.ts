@@ -15,7 +15,7 @@ export default async function saveBuffer(
 
   // write the buffer to the database
   try {
-    await prisma.buffer.create({
+    const savedBuffer = await prisma.buffer.create({
       data: {
         content: content,
         isPublic: isPublic,
@@ -30,6 +30,7 @@ export default async function saveBuffer(
 
     res.json({
       status: true,
+      buffer: savedBuffer
     });
   } catch (error) {
     res.json({

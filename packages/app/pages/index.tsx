@@ -86,7 +86,7 @@ const App: React.FC = (): JSX.Element => {
       publicKey,
     };
 
-    toast.promise(createBuffer(payload), {
+    toast.promise(createBuffer(payload).then((result: BResponse) => setBuffers([...buffers, result.buffer])), {
       success: "Buffer Saved",
       error: "Failed to save buffer",
       loading: "Saving...",
