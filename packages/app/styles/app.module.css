@@ -8,16 +8,38 @@
 .centerContentRow {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
 }
 
 .buffers {
-  overflow-y: scroll;
-  width: 98%;
-  height: 100%;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 1em;
-  margin: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.fab {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+@media screen and (max-width: 500px) {
+  .buffers {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  .fab {
+    justify-content: center;
+    align-items: center;
+  }
 }

@@ -6,7 +6,11 @@ import {
   Select,
   Spacer,
   Toggle,
+  Card,
+  Button,
+  Grid,
 } from "@geist-ui/core";
+import { Plus } from "@geist-ui/react-icons";
 import { makeKeyPair, hashKey } from "../utils/keys";
 import styles from "../styles/app.module.css";
 import Buffer from "../components/Buffer";
@@ -35,8 +39,11 @@ const App: React.FC = (): JSX.Element => {
 
   const router = useRouter();
 
+  let repeats = 4;
+
   // load/create keypair on-load routine
   useEffect(() => {
+    repeats = window.innerWidth / 300;
     const localPk = localStorage.getItem("publicKey");
     const localSecret = localStorage.getItem("secret");
 
@@ -150,22 +157,38 @@ const App: React.FC = (): JSX.Element => {
   return (
     <div className={styles.buffersPage}>
       <div className={styles.buffers}>
-        {buffers.map((item) => (
-          <Buffer
-            key={item.id}
-            content={item.content}
-            type={item.type}
-            date={item.date}
-            isPublic={item.isPublic}
-            id={item.id}
-            expiryDate={item.expiryDate}
-            editHandler={(_: any) =>
-              editBufferTrigger(item.id, item.type, item.content, item.isPublic)
-            }
-          />
-        ))}
+        <Grid.Container
+          gap={1.5}
+          justify="center"
+          style={{ overflowY: "scroll", width: "100%", height: "100%" }}
+        >
+          {buffers.map((item) => (
+            <Grid key={item.id}>
+              <Buffer
+                content={item.content}
+                type={item.type}
+                date={item.date}
+                isPublic={item.isPublic}
+                id={item.id}
+                expiryDate={item.expiryDate}
+                editHandler={(_: any) =>
+                  editBufferTrigger(
+                    item.id,
+                    item.type,
+                    item.content,
+                    item.isPublic
+                  )
+                }
+              />
+            </Grid>
+          ))}
+        </Grid.Container>
       </div>
-      <button onClick={(_) => setVisible(true)}>Create Buffer</button>
+      <div className={styles.fab}>
+        <Card>
+          <Button auto scale={0.35} px={0.6} icon={<Plus />} />
+        </Card>
+      </div>
       <Modal {...bindings}>
         <Modal.Title>{modalUse} Buffer</Modal.Title>
         <Modal.Content className={styles.centerContentCol}>
