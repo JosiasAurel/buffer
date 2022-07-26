@@ -61,8 +61,7 @@ const App: React.FC = (): JSX.Element => {
           setBuffers(result.buffers as any[]);
           toast.success("Fetched Buffers");
         })
-        .catch(e_ => toast.error("Failed to fetch buffer"));
-
+        .catch((e_) => toast.error("Failed to fetch buffer"));
     }
   }, [secret, publicKey]);
 
@@ -86,26 +85,32 @@ const App: React.FC = (): JSX.Element => {
       publicKey,
     };
 
-    toast.promise(createBuffer(payload).then((result: BResponse) => {
-      setBuffers([...buffers, result.buffer]);
-      crSetVisible(false);
-      setContent(""); setBufferType("text"); setIsPublic(false);
-    }), {
-      success: "Buffer Saved",
-      error: "Failed to save buffer",
-      loading: "Saving...",
-    });
+    toast.promise(
+      createBuffer(payload).then((result: BResponse) => {
+        setBuffers([...buffers, result.buffer]);
+        crSetVisible(false);
+        setContent("");
+        setBufferType("text");
+        setIsPublic(false);
+      }),
+      {
+        success: "Buffer Saved",
+        error: "Failed to save buffer",
+        loading: "Saving...",
+      }
+    );
   }
   return (
     <div className={styles.buffersPage}>
       <div className={styles.buffers}>
-        {buffers.map(item => (
+        {buffers.map((item) => (
           <Buffer
             key={item.id}
             content={item.content}
             type={item.type}
             date={item.date}
             isPublic={item.isPublic}
+            id={item.id}
           />
         ))}
       </div>

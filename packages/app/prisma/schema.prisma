@@ -18,5 +18,5 @@ model Buffer {
   content     String
   expiryDate  DateTime
   isPublic    Boolean
-  id          String @id
+  id          String   @id
 }

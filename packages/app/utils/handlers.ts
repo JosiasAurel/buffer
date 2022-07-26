@@ -15,7 +15,9 @@ async function makeRequest(
   return result;
 }
 
-function createBuffer(buffer: BufferParam): Promise<BResponse | BResponse[] | string> {
+function createBuffer(
+  buffer: BufferParam
+): Promise<BResponse | BResponse[] | string> {
   return new Promise((resolve, reject) => {
     makeRequest("/api/save", buffer)
       .then((result) => {
@@ -42,4 +44,16 @@ function fetchBuffers(
   });
 }
 
-export { createBuffer, fetchBuffers };
+function deleteBuffer(bufferId: string): Promise<BResponse | string> {
+  return new Promise((resolve, reject) => {
+    makeRequest("/api/delete-buffer", { bufferId })
+      .then((result) => {
+        if (result.status) {
+          resolve(result);
+        } else reject("Failed");
+      })
+      .catch((e_) => reject("Failed"));
+  });
+}
+
+export { createBuffer, fetchBuffers, deleteBuffer };

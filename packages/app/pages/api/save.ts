@@ -30,7 +30,7 @@ export default async function saveBuffer(
 
     res.json({
       status: true,
-      buffer: savedBuffer
+      buffer: savedBuffer,
     });
   } catch (error) {
     res.json({
