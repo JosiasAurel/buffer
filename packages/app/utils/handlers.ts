@@ -78,4 +78,22 @@ function updateBuffer(
   });
 }
 
-export { createBuffer, fetchBuffers, deleteBuffer, updateBuffer };
+function refreshBuffer(bufferId: string): Promise<BResponse | string> {
+  return new Promise((resolve, reject) => {
+    makeRequest("/api/refresh-buffer", { bufferId })
+      .then((result) => {
+        if (result.status) {
+          resolve(result);
+        } else reject("Failed");
+      })
+      .catch((_) => reject("Failed"));
+  });
+}
+
+export {
+  createBuffer,
+  fetchBuffers,
+  deleteBuffer,
+  updateBuffer,
+  refreshBuffer,
+};

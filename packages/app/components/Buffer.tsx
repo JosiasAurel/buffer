@@ -12,7 +12,7 @@ import {
 } from "@geist-ui/core";
 import { RefreshCw } from "@geist-ui/react-icons";
 import toast from "react-hot-toast";
-import { deleteBuffer } from "../utils/handlers";
+import { deleteBuffer, refreshBuffer } from "../utils/handlers";
 
 type Props = Partial<Buffer> & { editHandler: Function };
 
@@ -117,7 +117,21 @@ const Buffer: React.FC<Props> = ({
               "Refresh. (This will reset this buffer's countdown to 24 hours.)"
             }
           >
-            <Button auto icon={<RefreshCw />} scale={0.35} px={0.6} />
+            <Button
+              auto
+              icon={<RefreshCw />}
+              scale={0.35}
+              px={0.6}
+              onClick={(_) => {
+                toast
+                  .promise(refreshBuffer(id), {
+                    success: "Refreshed",
+                    loading: "Refreshing...",
+                    error: "Failed to Refresh",
+                  })
+                  .then((_) => setTimeout(() => window.location.reload(), 1500));
+              }}
+            />
           </Tooltip>
         </span>
       </div>
