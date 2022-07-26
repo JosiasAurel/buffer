@@ -10,13 +10,14 @@ import {
   Button,
   Grid,
 } from "@geist-ui/core";
-import { Plus } from "@geist-ui/react-icons";
+import { Plus, Home, Github } from "@geist-ui/react-icons";
 import { makeKeyPair, hashKey } from "../utils/keys";
 import styles from "../styles/app.module.css";
 import Buffer from "../components/Buffer";
 import toast from "react-hot-toast";
 import { createBuffer, fetchBuffers, updateBuffer } from "../utils/handlers";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 let modalActions: any = {};
 
@@ -184,11 +185,15 @@ const App: React.FC = (): JSX.Element => {
           ))}
         </Grid.Container>
       </div>
-      <div className={styles.fab}>
-        <Card>
-          <Button auto scale={0.35} px={0.6} icon={<Plus />} />
-        </Card>
-      </div>
+      <Card className={styles.fab}>
+        <Button auto scale={0.35} px={0.6} icon={<Plus />} onClick={_ => setVisible(true)} />
+        <Spacer />
+        <Button auto scale={0.35} px={0.6} icon={<Home />} onClick={_ => router.replace("/")} />
+        <Spacer />
+        <Link href="https://github.com/JosiasAurel/buffer">
+          <Button auto scale={0.35} px={0.6} icon={<Github />} />
+        </Link>
+      </Card>
       <Modal {...bindings}>
         <Modal.Title>{modalUse} Buffer</Modal.Title>
         <Modal.Content className={styles.centerContentCol}>
