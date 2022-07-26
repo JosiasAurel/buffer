@@ -23,3 +23,5 @@ declare type BResponse = {
   buffers?: any[];
   buffer?: any;
 };
+
+declare type BufferType = "text" | "code";

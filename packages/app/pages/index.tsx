@@ -11,7 +11,8 @@ import { makeKeyPair, hashKey } from "../utils/keys";
 import styles from "../styles/app.module.css";
 import Buffer from "../components/Buffer";
 import toast from "react-hot-toast";
-import { createBuffer, fetchBuffers } from "../utils/handlers";
+import { createBuffer, fetchBuffers, updateBuffer } from "../utils/handlers";
+import { useRouter } from "next/router";
 
 let modalActions: any = {};
 
@@ -20,13 +21,19 @@ const App: React.FC = (): JSX.Element => {
   const [publicKey, setPublicKey] = useState<string>("");
 
   // modals
-  const {
-    visible: crVisible,
-    setVisible: crSetVisible,
-    bindings: crBindings,
-  } = useModal();
+  const { setVisible, bindings } = useModal();
 
-  modalActions.createModalVisible = (bVal) => crSetVisible(bVal);
+  // default modal use
+  const [modalUse, setModalUse] = useState<"Create" | "Edit">("Create");
+
+  // buffer ID for use in Edit mode
+  const [bufferId, setBufferId] = useState<string>("");
+
+  modalActions.createModalVisible = (
+    bVal: boolean | ((prevState: boolean) => boolean)
+  ) => setVisible(bVal);
+
+  const router = useRouter();
 
   // load/create keypair on-load routine
   useEffect(() => {
@@ -85,20 +92,60 @@ const App: React.FC = (): JSX.Element => {
       publicKey,
     };
 
-    toast.promise(
-      createBuffer(payload).then((result: BResponse) => {
-        setBuffers([...buffers, result.buffer]);
-        crSetVisible(false);
-        setContent("");
-        setBufferType("text");
-        setIsPublic(false);
-      }),
-      {
-        success: "Buffer Saved",
-        error: "Failed to save buffer",
-        loading: "Saving...",
-      }
-    );
+    toast
+      .promise(
+        createBuffer(payload).then((result: BResponse) => {
+          setBuffers([...buffers, result.buffer]);
+          setVisible(false);
+          setContent("");
+          setBufferType("text");
+          setIsPublic(false);
+        }),
+        {
+          success: "Buffer Saved",
+          error: "Failed to save buffer",
+          loading: "Saving...",
+        }
+      )
+      .then((_) => router.reload());
+  }
+
+  function editBufferTrigger(
+    id: string,
+    type: "text" | "code",
+    content: string,
+    isPublic: boolean
+  ): void {
+    setVisible(true); // open the modal
+
+    // set the params of the buffer
+    setBufferType(type);
+    setContent(content);
+    setIsPublic(isPublic);
+    setBufferId(id);
+    setModalUse("Edit");
+  }
+
+  function editBuffer() {
+    toast
+      .promise(
+        updateBuffer(bufferId, content, bufferType, isPublic).then(
+          (result: BResponse) => {
+            // setBuffers([...buffers, result.buffer]);
+            setVisible(false);
+            setContent("");
+            setBufferType("text");
+            setIsPublic(false);
+          }
+        ),
+        {
+          success: "Buffer Saved",
+          error: "Failed to save buffer",
+          loading: "Saving...",
+        }
+      )
+      .then((_) => setModalUse("Create"))
+      .then((_) => router.reload());
   }
   return (
     <div className={styles.buffersPage}>
@@ -111,15 +158,19 @@ const App: React.FC = (): JSX.Element => {
             date={item.date}
             isPublic={item.isPublic}
             id={item.id}
+            editHandler={(_: any) =>
+              editBufferTrigger(item.id, item.type, item.content, item.isPublic)
+            }
           />
         ))}
       </div>
-      <button onClick={(_) => crSetVisible(true)}>Create Buffer</button>
-      <Modal {...crBindings}>
-        <Modal.Title>Create Buffer</Modal.Title>
+      <button onClick={(_) => setVisible(true)}>Create Buffer</button>
+      <Modal {...bindings}>
+        <Modal.Title>{modalUse} Buffer</Modal.Title>
         <Modal.Content className={styles.centerContentCol}>
           <Select
-            placeholder="Plain Text"
+            placeholder="Text Type"
+            defaultValue={"text"}
             onChange={(value) => setBufferType(value as "text" | "code")}
           >
             <Select.Option value="text">Plain Text</Select.Option>
@@ -143,10 +194,17 @@ const App: React.FC = (): JSX.Element => {
             />
           </span>
         </Modal.Content>
-        <Modal.Action passive onClick={(_) => crSetVisible(false)}>
+        <Modal.Action passive onClick={(_) => setVisible(false)}>
           Close
         </Modal.Action>
-        <Modal.Action onClick={(_) => saveBuffer()}>Save</Modal.Action>
+        <Modal.Action
+          onClick={(_) => {
+            if (modalUse === "Create") saveBuffer();
+            if (modalUse === "Edit") editBuffer();
+          }}
+        >
+          Save
+        </Modal.Action>
       </Modal>
     </div>
   );

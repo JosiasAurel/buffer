@@ -56,4 +56,26 @@ function deleteBuffer(bufferId: string): Promise<BResponse | string> {
   });
 }
 
-export { createBuffer, fetchBuffers, deleteBuffer };
+function updateBuffer(
+  bufferId: string,
+  content: string,
+  type: BufferType,
+  isPublic: boolean
+): Promise<BResponse | string> {
+  return new Promise((resolve, reject) => {
+    makeRequest("/api/update-buffer", {
+      bufferId,
+      content,
+      type,
+      isPublic,
+    })
+      .then((result) => {
+        if (result.status) {
+          resolve(result);
+        } else reject("Failed");
+      })
+      .catch((_) => reject("Failed"));
+  });
+}
+
+export { createBuffer, fetchBuffers, deleteBuffer, updateBuffer };

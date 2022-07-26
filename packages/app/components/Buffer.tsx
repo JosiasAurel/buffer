@@ -11,13 +11,14 @@ import {
 import toast from "react-hot-toast";
 import { deleteBuffer } from "../utils/handlers";
 
-type Props = Partial<Buffer>;
+type Props = Partial<Buffer> & { editHandler: Function };
 
 const Buffer: React.FC<Props> = ({
   content,
   id,
   type,
   isPublic,
+  editHandler,
 }): JSX.Element => {
   const { copy } = useClipboard();
 
@@ -37,11 +38,9 @@ const Buffer: React.FC<Props> = ({
         {type === "text" ? (
           <Text style={{ overflow: "scroll" }}>{content}</Text>
         ) : (
-          <Text my={0}>
-            <Code classic={true} style={{ overflow: "scroll" }} block>
-              {content}
-            </Code>
-          </Text>
+          <Code classic={true} style={{ overflow: "scroll" }} block>
+            {content}
+          </Code>
         )}
       </div>
 
@@ -57,7 +56,7 @@ const Buffer: React.FC<Props> = ({
         <Badge type={isPublic ? "success" : "default"}>
           {isPublic ? "Public" : "Private"}
         </Badge>
-        <Button auto scale={0.35}>
+        <Button auto scale={0.35} onClick={(_) => editHandler()}>
           Edit
         </Button>
         <Button
