@@ -1,23 +1,30 @@
+async function makeRequest(
+  endpoint: string,
+  requestBody: any
+): Promise<BResponse> {
+  const response = await fetch(endpoint, {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(requestBody),
+  });
 
-async function makeRequest(endpoint: string, requestBody: any): Promise<BResponse> {
-    const response = await fetch(endpoint, {
-        method: "post",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(requestBody)
-    });
+  const result: BResponse = await response.json();
 
-    const result: BResponse = await response.json();
-    
-    return result;
+  return result;
 }
 
-async function createBuffer(buffer: BufferParam) {
-    const { status } = await makeRequest("/api/save", buffer);
-    return status;
+function createBuffer(buffer: BufferParam): Promise<BResponse | string> {
+  return new Promise((resolve, reject) => {
+    makeRequest("/api/save", buffer)
+      .then((result) => {
+        if (result.status) {
+          resolve(result);
+        } else reject("Failed");
+      })
+      .catch((error) => reject("Failed"));
+  });
 }
 
-export {
-    createBuffer
-};
+export { createBuffer };

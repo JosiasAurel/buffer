@@ -7,9 +7,11 @@ import {
   Spacer,
   Toggle,
 } from "@geist-ui/core";
-import { makeKeyPair } from "../utils/keys";
+import { makeKeyPair, hashKey } from "../utils/keys";
 import styles from "../styles/app.module.css";
 import Buffer from "../components/Buffer";
+import toast from "react-hot-toast";
+import { createBuffer } from "../utils/handlers";
 
 let modalActions: any = {};
 
@@ -53,14 +55,30 @@ const App: React.FC = (): JSX.Element => {
   const [bufferType, setBufferType] = useState<"text" | "code">("text");
   const [isPublic, setIsPublic] = useState<boolean>(false);
 
+  // handle changes on text input elements
   function textChangeHandler(event, handler): void {
     handler(event.target.value);
   }
+
+  // onClick handler for saving a new buffer
+  function saveBuffer() {
+    const payload: BufferParam = {
+      content,
+      isPublic,
+      ownerHash: hashKey(secret),
+      type: bufferType,
+      publicKey,
+    };
+
+    toast.promise(createBuffer(payload), {
+      success: "Buffer Saved",
+      error: "Failed to save buffer",
+      loading: "Saving...",
+    });
+  }
   return (
     <div>
-      <div className={styles.buffers}>
-
-      </div>
+      <div className={styles.buffers}></div>
       <button onClick={(_) => crSetVisible(true)}>Create Buffer</button>
       <Modal {...crBindings}>
         <Modal.Title>Create Buffer</Modal.Title>
@@ -93,7 +111,7 @@ const App: React.FC = (): JSX.Element => {
         <Modal.Action passive onClick={(_) => crSetVisible(false)}>
           Close
         </Modal.Action>
-        <Modal.Action>Save</Modal.Action>
+        <Modal.Action onClick={(_) => saveBuffer()}>Save</Modal.Action>
       </Modal>
     </div>
   );

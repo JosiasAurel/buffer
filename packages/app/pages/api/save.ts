@@ -8,37 +8,34 @@ export default async function saveBuffer(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method === "post") {
-    const { type, ownerHash, content, isPublic, publicKey } = req.body;
+  const { type, ownerHash, content, isPublic, publicKey } = req.body;
 
-    const currentDate = new Date();
-    const expiryDate = new Date().setDate(currentDate.getDate() + 1);
+  const currentDate = new Date();
+  const expiryDate = new Date().setDate(currentDate.getDate() + 1);
 
-    // write the buffer to the database
-    try {
-      await prisma.buffer.create({
-        data: {
-          content: content,
-          isPublic: isPublic,
-          type: type,
-          publicOwner: publicKey,
-          date: currentDate,
-          owner: ownerHash,
-          id: nanoid(5),
-          expiryDate: new Date(expiryDate),
-        },
-      });
+  // write the buffer to the database
+  try {
+    await prisma.buffer.create({
+      data: {
+        content: content,
+        isPublic: isPublic,
+        type: type,
+        publicOwner: publicKey,
+        date: currentDate,
+        owner: ownerHash,
+        id: nanoid(5),
+        expiryDate: new Date(expiryDate),
+      },
+    });
 
-      res.json({
-        status: true,
-      });
-      
-    } catch (error) {
-      res.json({
-        status: false,
-        error: error,
-      });
-    }
+    res.json({
+      status: true,
+    });
+  } catch (error) {
+    res.json({
+      status: false,
+      error: error,
+    });
   }
 
   return prisma.$disconnect();

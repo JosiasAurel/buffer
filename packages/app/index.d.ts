@@ -1,9 +1,9 @@
 declare type BufferParam = {
-  owner: string;
-  publicOwner: string;
+  ownerHash: string;
+  publicKey: string;
   type: string;
   content: string;
-  isPublic: boolean
+  isPublic: boolean;
 };
 
 declare type Buffer = {
@@ -18,7 +18,7 @@ declare type Buffer = {
 };
 
 declare type BResponse = {
-  status: boolean
-  error?: any
-  buffers?: any
-}
+  status: boolean;
+  error?: any;
+  buffers?: any;
+};
