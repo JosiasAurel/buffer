@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Note, useClipboard } from "@geist-ui/react";
+import { Note, useClipboard } from "@geist-ui/core";
 import BufferFile from "./BufferFile";
 import toast from "react-hot-toast";
 

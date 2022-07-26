@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Text, Button } from "@geist-ui/react";
+import { Card, Text, Button } from "@geist-ui/core";
 
 type BufferedFile = {
   type: string;
