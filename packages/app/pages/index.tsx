@@ -96,7 +96,12 @@ const App: React.FC = (): JSX.Element => {
     <div>
       <div className={styles.buffers}>
         {buffers.map(item => (
-          <Buffer buffer={item.content} />
+          <Buffer
+            key={item.id}
+            content={item.content}
+            type={item.type}
+            date={item.date}
+          />
         ))}
       </div>
       <button onClick={(_) => crSetVisible(true)}>Create Buffer</button>

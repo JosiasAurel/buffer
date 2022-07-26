@@ -1,26 +1,32 @@
 import React from "react";
 
-import { Card, useClipboard } from "@geist-ui/core";
+import { Card, useClipboard, Text, Code, Divider } from "@geist-ui/core";
 import toast from "react-hot-toast";
 
-type Props = {
-  buffer: string | any;
-};
-const Buffer: React.FC<Props> = ({ buffer }): JSX.Element => {
-  const { copy } = useClipboard();
-  let isSerialisable = false;
+type Props = Partial<Buffer>;
 
-  try {
-    if (typeof JSON.parse(buffer) === "object") {
-      isSerialisable = true;
-    }
-  } catch (error) {
-    // pass
-  }
+const Buffer: React.FC<Props> = ({ content, date, type }): JSX.Element => {
+  const { copy } = useClipboard();
 
   return (
-    <Card>
-      <h2>Hello World</h2>
+    <Card onClick={_ => {
+      copy(content);
+      toast("Copied to clipboard", { icon: "📎" });
+    }}>
+      {
+        type === "text" ?
+          <Text>
+            {content}
+          </Text>
+          :
+          <Code block>
+            {content}
+          </Code>
+      }
+      <Divider />
+      <span>
+        {new Date(date).toDateString()}
+      </span>
     </Card>
   );
 };
