@@ -7,31 +7,30 @@ export default async function fetchBuffers(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method === "post") {
-    const { ownerHash, publicKey } = req.body;
+  const { ownerHash, publicKey } = req.body;
 
-    try {
-      const buffers = await prisma.buffer.findMany({
-        where: {
-          OR: [
-            {
-              owner: ownerHash,
-            },
-            {
-              publicOwner: publicKey,
-            },
-          ],
-        },
-      });
+  try {
+    const buffers = await prisma.buffer.findMany({
+      where: {
+        OR: [
+          {
+            owner: ownerHash,
+          },
+          {
+            publicOwner: publicKey,
+          },
+        ],
+      },
+    });
 
-      res.json({
-        status: true,
-        buffers: buffers,
-      });
-    } catch (error) {
-      res.json({
-        status: false,
-      });
-    }
+    res.json({
+      status: true,
+      buffers: buffers,
+    });
+  } catch (error) {
+    res.json({
+      status: false,
+    });
   }
+  return prisma.$disconnect();
 }
