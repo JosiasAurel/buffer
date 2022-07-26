@@ -1,4 +1,4 @@
-
+import { modalActions } from "../pages/index";
 
 const actions = [
   {
@@ -6,7 +6,7 @@ const actions = [
     name: "Create Buffer",
     shortcut: ["c"],
     keywords: "buffer create new",
-    perform: () => alert("Creating a Buffer..."),
+    perform: () => modalActions.createModalVisible(true),
   },
   {
     id: "about",
@@ -17,6 +17,4 @@ const actions = [
   },
 ];
 
-export {
-    actions
-};
+export { actions };

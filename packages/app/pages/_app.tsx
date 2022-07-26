@@ -12,7 +12,7 @@ import {
   NO_GROUP,
   KBarResults,
   ActionImpl,
-  ActionId
+  ActionId,
 } from "kbar";
 import "../styles/global.css";
 import "inter-ui/inter.css";
@@ -46,7 +46,6 @@ const groupNameStyle = {
   opacity: 0.5,
 };
 
-
 const ResultItem = React.forwardRef(
   (
     {
@@ -78,8 +77,9 @@ const ResultItem = React.forwardRef(
         style={{
           padding: "12px 16px",
           background: active ? "var(--a1)" : "transparent",
-          borderLeft: `2px solid ${active ? "var(--foreground)" : "transparent"
-            }`,
+          borderLeft: `2px solid ${
+            active ? "var(--foreground)" : "transparent"
+          }`,
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
@@ -149,29 +149,26 @@ const ResultItem = React.forwardRef(
   }
 );
 
-
 const RenderkBarResults: React.FC = (): JSX.Element => {
   const { results, rootActionId } = useMatches();
 
   return (
     <KBarResults
       items={results}
-      onRender={({ item, active }) => (
-        typeof item === "string"
-          ?
-          (<div style={groupNameStyle}> {item} </div>)
-          :
-          (
-            <ResultItem
-              action={item}
-              active={active}
-              currentRootActionId={rootActionId}
-            />
-          )
-      )}
+      onRender={({ item, active }) =>
+        typeof item === "string" ? (
+          <div style={groupNameStyle}> {item} </div>
+        ) : (
+          <ResultItem
+            action={item}
+            active={active}
+            currentRootActionId={rootActionId}
+          />
+        )
+      }
     />
-  )
-}
+  );
+};
 
 const BufferedApp: React.FC<AppProps> = ({ Component, pageProps }) => {
   return (

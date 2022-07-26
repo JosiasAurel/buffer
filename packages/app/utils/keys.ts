@@ -6,8 +6,9 @@ function makeKeyPair() {
   const publicKey = nanoid(7);
 
   return {
-    secretKey, publicKey
-  }
+    secretKey,
+    publicKey,
+  };
 }
 
 function hashKey(key: string): string {

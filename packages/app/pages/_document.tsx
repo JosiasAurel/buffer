@@ -10,7 +10,7 @@ class BufferedLinkDoc extends Document {
     return (
       <Html>
         <Head>
-          <script
+          {/* <script
             async
             src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
           />
@@ -25,7 +25,7 @@ class BufferedLinkDoc extends Document {
             });
           `,
             }}
-          />
+          /> */}
         </Head>
         <body>
           <Main />
