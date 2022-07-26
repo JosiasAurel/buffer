@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Textarea, useModal, Select, Spacer } from "@geist-ui/core";
+import {
+  Modal,
+  Textarea,
+  useModal,
+  Select,
+  Spacer,
+  Toggle,
+} from "@geist-ui/core";
 import { makeKeyPair } from "../utils/keys";
 import styles from "../styles/app.module.css";
 
@@ -42,7 +49,8 @@ const App: React.FC = (): JSX.Element => {
 
   // create buffer state variables
   const [content, setContent] = useState<string>("");
-  const [bufferType, setBufferType] = useState<string>("text");
+  const [bufferType, setBufferType] = useState<"text" | "code">("text");
+  const [isPublic, setIsPublic] = useState<boolean>(false);
 
   function textChangeHandler(event, handler): void {
     handler(event.target.value);
@@ -55,7 +63,7 @@ const App: React.FC = (): JSX.Element => {
         <Modal.Content className={styles.centerContentCol}>
           <Select
             placeholder="Plain Text"
-            onChange={(value) => setBufferType(value.toString())}
+            onChange={(value) => setBufferType(value as "text" | "code")}
           >
             <Select.Option value="text">Plain Text</Select.Option>
             <Select.Option value="code">Code</Select.Option>
@@ -68,6 +76,15 @@ const App: React.FC = (): JSX.Element => {
             onChange={(event) => textChangeHandler(event, setContent)}
             placeholder="Enter/Paste text in here..."
           />
+          <Spacer />
+          <span style={{ width: "100%" }} className={styles.centerContentRow}>
+            <p>Public</p>
+            <Toggle
+              checked={isPublic}
+              onChange={(_) => setIsPublic(!isPublic)}
+              initialChecked={false}
+            />
+          </span>
         </Modal.Content>
         <Modal.Action passive onClick={(_) => crSetVisible(false)}>
           Close
