@@ -16,13 +16,23 @@ import { deleteBuffer } from "../utils/handlers";
 
 type Props = Partial<Buffer> & { editHandler: Function };
 
+// pls forgive me
+function RemainingTime(expiryDate: number): string {
+  const expiryTime = new Date(new Date(expiryDate).toUTCString()).getTime();
+  const difference = expiryTime - new Date(new Date().toUTCString()).getTime();
+
+  const hours = Math.abs(difference / (1000 * 60 * 60));
+  const minutes = Math.abs(difference / (1000 * 60) - (hours * 60));
+
+  return `${hours.toFixed(0)}h ${minutes.toFixed(0)}mins`;
+}
+
 const Buffer: React.FC<Props> = ({
   content,
   id,
   type,
   isPublic,
   editHandler,
-  date,
   expiryDate
 }): JSX.Element => {
   const { copy } = useClipboard();
@@ -98,7 +108,7 @@ const Buffer: React.FC<Props> = ({
           }}
         >
           <Badge type={"default"}>
-            Expires In : 24h
+            Expires In : {RemainingTime(expiryDate)}
           </Badge>
           <Tooltip
             text={"Refresh. (This will reset this buffer's countdown to 24 hours.)"}

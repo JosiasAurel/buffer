@@ -158,6 +158,7 @@ const App: React.FC = (): JSX.Element => {
             date={item.date}
             isPublic={item.isPublic}
             id={item.id}
+            expiryDate={item.expiryDate}
             editHandler={(_: any) =>
               editBufferTrigger(item.id, item.type, item.content, item.isPublic)
             }

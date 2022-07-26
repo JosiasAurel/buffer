@@ -10,9 +10,9 @@ declare type Buffer = {
   owner: string;
   publicOwner: string;
   type: string;
-  date: Date;
+  date: number;
   content: string;
-  expiryDate: Date;
+  expiryDate: number;
   isPublic: boolean;
   id: string;
 };
