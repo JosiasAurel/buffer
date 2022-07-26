@@ -11,3 +11,9 @@
   justify-content: space-evenly;
   align-items: center;
 }
+
+.buffers {
+  display: grid;
+  grid-template-columns: repeat(1fr, 4);
+  grid-gap: 1em;
+}

@@ -1,8 +1,9 @@
-declare type BufferType = {
-  key: string;
-  buffer: string;
-  date: string;
+declare type BufferParam = {
   owner: string;
+  publicOwner: string;
+  type: string;
+  content: string;
+  isPublic: boolean
 };
 
 declare type Buffer = {
@@ -15,3 +16,9 @@ declare type Buffer = {
   isPublic: boolean;
   id: string;
 };
+
+declare type BResponse = {
+  status: boolean
+  error?: any
+  buffers?: any
+}

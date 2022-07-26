@@ -1,7 +1,6 @@
 import React from "react";
 
-import { Note, useClipboard } from "@geist-ui/core";
-import BufferFile from "./BufferFile";
+import { Card, useClipboard } from "@geist-ui/core";
 import toast from "react-hot-toast";
 
 type Props = {
@@ -19,29 +18,11 @@ const Buffer: React.FC<Props> = ({ buffer }): JSX.Element => {
     // pass
   }
 
-  if (isSerialisable) {
-    return <BufferFile buffer={buffer} />;
-  }
   return (
-    <Note
-      style={{
-        width: "80vw",
-        overflow: "auto",
-      }}
-      onClick={(_) => {
-        copy(buffer);
-        toast("Copied to clipboard");
-      }}
-      label={false}
-    >
-      {buffer}
-    </Note>
+    <Card>
+      <h2>Hello World</h2>
+    </Card>
   );
 };
-
-/* 
-  if (typeof JSON.parse(buffer) === "object") {
-  return <BufferFile buffer={buffer} />
-  } */
 
 export default Buffer;

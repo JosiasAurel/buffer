@@ -9,6 +9,7 @@ import {
 } from "@geist-ui/core";
 import { makeKeyPair } from "../utils/keys";
 import styles from "../styles/app.module.css";
+import Buffer from "../components/Buffer";
 
 let modalActions: any = {};
 
@@ -57,6 +58,9 @@ const App: React.FC = (): JSX.Element => {
   }
   return (
     <div>
+      <div className={styles.buffers}>
+
+      </div>
       <button onClick={(_) => crSetVisible(true)}>Create Buffer</button>
       <Modal {...crBindings}>
         <Modal.Title>Create Buffer</Modal.Title>
