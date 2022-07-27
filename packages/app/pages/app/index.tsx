@@ -9,8 +9,9 @@ import {
   Card,
   Button,
   Grid,
+  Input
 } from "@geist-ui/core";
-import { Plus, Home, Github } from "@geist-ui/react-icons";
+import { Plus, Home, Github, Settings } from "@geist-ui/react-icons";
 import { makeKeyPair, hashKey } from "../../utils/keys";
 import styles from "../../styles/app.module.css";
 import Buffer from "../../components/Buffer";
@@ -26,7 +27,10 @@ const App: React.FC = (): JSX.Element => {
   const [publicKey, setPublicKey] = useState<string>("");
 
   // modals
+  // modal for creating and updating buffer
   const { setVisible, bindings } = useModal();
+
+  const { setVisible: sSetVisible, bindings: sBindings } = useModal();
 
   // default modal use
   const [modalUse, setModalUse] = useState<"Create" | "Edit">("Create");
@@ -38,13 +42,12 @@ const App: React.FC = (): JSX.Element => {
     bVal: boolean | ((prevState: boolean) => boolean)
   ) => setVisible(bVal);
 
-  const router = useRouter();
+  modalActions.settingsModalVisible = (bVal: boolean) => sSetVisible(bVal);
 
-  let repeats = 4;
+  const router = useRouter();
 
   // load/create keypair on-load routine
   useEffect(() => {
-    repeats = window.innerWidth / 300;
     const localPk = localStorage.getItem("publicKey");
     const localSecret = localStorage.getItem("secret");
 
@@ -205,7 +208,32 @@ const App: React.FC = (): JSX.Element => {
         <Link href="https://github.com/JosiasAurel/buffer">
           <Button auto scale={0.35} px={0.6} icon={<Github />} />
         </Link>
+        <Spacer />
+        <Button onClick={_ => sSetVisible(true)} auto scale={0.35} px={0.6} icon={<Settings />} />
       </Card>
+
+      {/* modal for settings */}
+      <Modal {...sBindings} >
+        <Modal.Title> Settings </Modal.Title>
+        <Modal.Content style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center"
+        }}>
+          <Input onChange={e => textChangeHandler(e, setSecret)} clearable value={secret} placeholder="Your Secret" />
+          <Spacer />
+          <Input onChange={e => textChangeHandler(e, setPublicKey)} clearable value={publicKey} placeholder="Your Public Key" />
+        </Modal.Content>
+        <Modal.Action passive onClick={_ => sSetVisible(false)}>Close</Modal.Action>
+        <Modal.Action onClick={_ => {
+          localStorage.setItem("secret", secret);
+          localStorage.setItem("publicKey", publicKey);
+
+          router.reload();
+        }}>Save</Modal.Action>
+      </Modal>
+
+      {/* modal for creating & updating buffer */}
       <Modal {...bindings}>
         <Modal.Title>{modalUse} Buffer</Modal.Title>
         <Modal.Content className={styles.centerContentCol}>
