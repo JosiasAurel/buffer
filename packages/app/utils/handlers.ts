@@ -80,7 +80,8 @@ function updateBuffer(
 
 function refreshBuffer(bufferId: string): Promise<BResponse | string> {
   return new Promise((resolve, reject) => {
-    makeRequest("/api/refresh", { bufferId })
+    fetch(`/api/refresh?id=${bufferId}`)
+      .then(res => res.json())
       .then((result) => {
         if (result.status) {
           resolve(result);

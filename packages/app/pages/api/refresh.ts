@@ -7,13 +7,13 @@ export default async function fetchBuffers(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { bufferId } = req.body;
+  const bufferId = req.query.id;
 
   const currentDate = new Date(new Date().toUTCString());
   const expiryDate = new Date().setDate(currentDate.getDate() + 1);
   try {
     await prisma.buffer.update({
-      where: { id: bufferId },
+      where: { id: bufferId as string },
       data: {
         date: currentDate,
         expiryDate: new Date(expiryDate),
