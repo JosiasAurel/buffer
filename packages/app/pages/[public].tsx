@@ -1,7 +1,8 @@
 import React from "react";
-import { Card, Grid, Text, useClipboard } from "@geist-ui/core";
+import { Card, Grid, Text, useClipboard, Badge } from "@geist-ui/core";
 import { PrismaClient } from "@prisma/client";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 type Props = { data: string };
 
@@ -11,6 +12,18 @@ const PublicBuffersPage: React.FC<Props> = ({ data }): JSX.Element => {
     // console.log(data);
     return (
         <div>
+            <header style={{
+                width: "100vw",
+                backdropFilter: "blur(5px)",
+                top: 0,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+            }}>
+                <Link href="/">
+                    <Badge style={{ margin: "1em" }}>Buffered.link</Badge>
+                </Link>
+            </header>
             <div style={{ margin: "2em" }}>
                 <Grid.Container justify="center" gap={2}>
                     {buffers.map(item => (
