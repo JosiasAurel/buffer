@@ -1,7 +1,17 @@
 import React from "react";
-import { Text, Button, Snippet } from "@geist-ui/core";
+import { Text, Button, Card, Grid, Spacer } from "@geist-ui/core";
 import styles from "../styles/index.module.css";
 import Link from "next/link";
+
+const features: string[] = [
+    "Completely free and Open Source",
+    "Create Unlimited Buffers",
+    "Buffer Expires After 24 Hours",
+    "Refresh a Buffer to prolong its period",
+    "Edit/Delete a Buffer",
+    "Upload Small Text Files with the Go-based CLI",
+    "Share Your Buffer To The Public"
+];
 
 const IndexPage: React.FC = (): JSX.Element => {
     return (
@@ -15,11 +25,19 @@ const IndexPage: React.FC = (): JSX.Element => {
                         Your text buffer
                     </Text>
 
-                    <Link href="/app">
-                        <Button auto type="secondary">
-                            Open App
-                        </Button>
-                    </Link>
+                    <span style={{ display: "flex", flexDirection: "row" }}>
+                        <Link href="/docs">
+                            <Button auto>
+                                Docs
+                            </Button>
+                        </Link>
+                        <Spacer h={0} w={2} />
+                        <Link href="/app">
+                            <Button auto type="secondary">
+                                Open App
+                            </Button>
+                        </Link>
+                    </span>
 
                 </div>
             </main>
@@ -55,9 +73,32 @@ const IndexPage: React.FC = (): JSX.Element => {
                 </ul>
             </div>
 
+            <div style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+            }}>
+                <Grid.Container justify="center" gap={2} style={{ margin: "2em" }}>
+                    {features.map((item, idx) => {
+                        return (
+                            <Grid key={idx}>
+                                <Card style={{ maxWidth: "250px" }}>
+                                    <Text h3 style={{ textAlign: "center" }}>
+                                        {item}
+                                    </Text>
+                                </Card>
+                            </Grid>
+                        )
+                    })}
+                </Grid.Container>
+            </div>
+
             <footer>
                 <Text>Made by <Link href="https://twitter.com/JosiasWing">Josias Aurel</Link> on Earth 🌍 </Text>
                 <span style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly", alignItems: "center" }}>
+                    <Link href="/docs">
+                        Docs
+                    </Link>
                     <Link href="https://app.splitbee.io/projects/buffered.link">
                         Analytics
                     </Link>
