@@ -1,4 +1,4 @@
-import { modalActions } from "../pages/index";
+import { modalActions } from "../pages/app/index";
 
 const actions = [
   {
@@ -22,6 +22,13 @@ const actions = [
     shortcut: ["h"],
     keywords: "home",
     perform: () => window.location.replace("/"),
+  },
+  {
+    id: "open-app",
+    name: "Open App",
+    shortcut: ["a"],
+    keywords: "app",
+    perform: () => window.location.replace("/app"),
   },
 ];
 
