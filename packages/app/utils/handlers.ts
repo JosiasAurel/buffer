@@ -46,7 +46,7 @@ function fetchBuffers(
 
 function deleteBuffer(bufferId: string): Promise<BResponse | string> {
   return new Promise((resolve, reject) => {
-    makeRequest("/api/delete-buffer", { bufferId })
+    makeRequest("/api/delete", { bufferId })
       .then((result) => {
         if (result.status) {
           resolve(result);
@@ -63,7 +63,7 @@ function updateBuffer(
   isPublic: boolean
 ): Promise<BResponse | string> {
   return new Promise((resolve, reject) => {
-    makeRequest("/api/update-buffer", {
+    makeRequest("/api/update", {
       bufferId,
       content,
       type,
@@ -80,7 +80,7 @@ function updateBuffer(
 
 function refreshBuffer(bufferId: string): Promise<BResponse | string> {
   return new Promise((resolve, reject) => {
-    makeRequest("/api/refresh-buffer", { bufferId })
+    makeRequest("/api/refresh", { bufferId })
       .then((result) => {
         if (result.status) {
           resolve(result);
