@@ -3,9 +3,9 @@ package main
 import (
 	"net/http"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"encoding/json"
+	"encoding/hex"
 	"crypto/sha256"
 	"strings"
 	"bytes"
@@ -26,7 +26,7 @@ func main() {
 	hasher := sha256.New()
 	hasher.Write([]byte(SECRET))
 
-	hashedSecret := string(hasher.Sum(nil)[:])
+	hashedSecret := hex.EncodeToString(hasher.Sum(nil)[:])
 
 	if argsLength == 0 {
 		ShowHelp()
@@ -40,25 +40,6 @@ func main() {
 		}
 	}
 
-	requestURL := "https://jsonplaceholder.typicode.com/todos/2"
-
-	req, err := http.NewRequest(http.MethodGet, requestURL, nil)
-
-	if err != nil {
-		fmt.Printf("An error occured")
-	}
-	
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		fmt.Printf("Failed")
-	}
-
-	rBody, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		fmt.Printf("Successfully got a response")
-	}
-
-	fmt.Printf("Res body : %s \n", rBody)
 }
 
 func ShowHelp() {
@@ -75,7 +56,8 @@ func BufferRoutine(secretHash string, publicKey string, service string) {
 
 	fileName := os.Args[2]
 
-	if os.Args[3] == "-p" {
+
+	if len(os.Args) > 3 && os.Args[3] == "-p" {
 		isPublic = true
 	}
 	
@@ -86,15 +68,16 @@ func BufferRoutine(secretHash string, publicKey string, service string) {
 	payload := map[string]interface{}{
 		"type": "text",
 		"ownerHash": secretHash,
-		"content": content,
+		"content": string(content),
 		"isPublic": isPublic,
 		"publicKey": publicKey,
 	}
 
-	jsonBody_, err := json.Marshal(payload)
+	jsonBody, err := json.Marshal(payload)
 	if err != nil { fmt.Printf("Failed") }
 
-	jsonBody := []byte(jsonBody_)
+	fmt.Printf("Marshalled Body : \n %s \n", jsonBody)
+	// jsonBody := []byte(jsonBody_)
 	bodyReader := bytes.NewReader(jsonBody)
 	
 	req, err := http.NewRequest(http.MethodPost, service+"/save", bodyReader)
