@@ -19,7 +19,7 @@ const IndexPage: React.FC = (): JSX.Element => {
             <main className={styles.main}>
                 <div className={styles.flexCenterCol}>
                     <Text h1>
-                        Bufferd.link
+                        Buffered.link
                     </Text>
                     <Text style={{ fontFamily: "cursive" }}>
                         Your text buffer
