@@ -37,7 +37,7 @@ func main() {
 		} else if os.Args[1] == "refresh" {
 			RefreshRoutine(SERVER_URI)
 		} else if os.Args[1] == "get" {
-			GetRoutine()
+			GetRoutine(SERVER_URI)
 		}
 	}
 
@@ -107,7 +107,38 @@ func BufferRoutine(secretHash string, publicKey string, service string) {
 	}
 }
 
-func GetRoutine() {}
+func GetRoutine(service string) {
+
+	bufferId := os.Args[2]
+	outFileName := os.Args[3]
+	
+	req, err := http.NewRequest(http.MethodPost, service+"/get?id="+bufferId, nil)
+	
+	res, err := http.DefaultClient.Do(req)
+	if err != nil {
+		fmt.Printf("Failed")
+	}
+
+	resBody, _ := ioutil.ReadAll(res.Body)
+	
+	var data map[string]interface{}
+
+	_ = json.Unmarshal(resBody, &data)
+
+	status := data["status"]
+
+	if status == true {
+		buffer, _ := data["buffer"].(map[string]interface{})
+		content, _ := buffer["content"]
+		
+		// write to file
+		contentStr := fmt.Sprintf("%v", content)
+		file, err := os.Create(outFileName)
+		if err != nil { fmt.Printf("Failed") }
+		_, _ = file.WriteString(contentStr)
+	}
+
+}	
 func RefreshRoutine(service string) {
 
 	bufferId := os.Args[2]
