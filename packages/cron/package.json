@@ -1,0 +1,21 @@
+{
+  "name": "buffered-cron",
+  "version": "1.0.0",
+  "description": "A CRON service for deleting expired buffers",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "cron",
+    "service",
+    "perdiodic"
+  ],
+  "author": "Josias Aurel",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^4.1.0",
+    "deta": "^1.1.0",
+    "prisma": "^4.1.0"
+  }
+}

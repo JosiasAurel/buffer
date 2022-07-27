@@ -1,0 +1,21 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model Buffer {
+  id          String   @id
+  owner       String
+  publicOwner String
+  type        String
+  date        DateTime
+  content     String
+  expiryDate  DateTime
+  isPublic    Boolean
+}
