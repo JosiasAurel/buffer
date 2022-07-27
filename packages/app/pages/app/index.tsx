@@ -9,9 +9,10 @@ import {
   Card,
   Button,
   Grid,
-  Input
+  Input,
+  useClipboard
 } from "@geist-ui/core";
-import { Plus, Home, Github, Settings } from "@geist-ui/react-icons";
+import { Plus, Home, Github, Settings, Share2 } from "@geist-ui/react-icons";
 import { makeKeyPair, hashKey } from "../../utils/keys";
 import styles from "../../styles/app.module.css";
 import Buffer from "../../components/Buffer";
@@ -26,6 +27,7 @@ const App: React.FC = (): JSX.Element => {
   const [secret, setSecret] = useState<string>("");
   const [publicKey, setPublicKey] = useState<string>("");
 
+  const { copy } = useClipboard();
   // modals
   // modal for creating and updating buffer
   const { setVisible, bindings } = useModal();
@@ -208,6 +210,11 @@ const App: React.FC = (): JSX.Element => {
         <Link href="https://github.com/JosiasAurel/buffer">
           <Button auto scale={0.35} px={0.6} icon={<Github />} />
         </Link>
+        <Spacer />
+        <Button onClick={_ => {
+          copy(`https://buffered.link/${publicKey}`);
+          toast("Copied Public Buffer to Clipboard", { icon: "📎" });
+        }} auto scale={0.35} px={0.6} icon={<Share2 />} />
         <Spacer />
         <Button onClick={_ => sSetVisible(true)} auto scale={0.35} px={0.6} icon={<Settings />} />
       </Card>
