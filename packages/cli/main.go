@@ -35,7 +35,7 @@ func main() {
 		if os.Args[1] == "buffer" {
 			BufferRoutine(hashedSecret, publicKey, SERVER_URI)
 		} else if os.Args[1] == "refresh" {
-			RefreshRoutine()
+			RefreshRoutine(SERVER_URI)
 		} else if os.Args[1] == "get" {
 			GetRoutine()
 		}
@@ -108,4 +108,38 @@ func BufferRoutine(secretHash string, publicKey string, service string) {
 }
 
 func GetRoutine() {}
-func RefreshRoutine() {}
+func RefreshRoutine(service string) {
+
+	bufferId := os.Args[2]
+	
+	payload := map[string]interface{}{
+		"bufferId": bufferId,
+	}
+
+	jsonBody, err := json.Marshal(payload)
+	
+	bodyReader := bytes.NewReader(jsonBody)
+	
+	req, err := http.NewRequest(http.MethodPost, service+"/refresh-buffer", bodyReader)
+	req.Header.Set("Content-Type", "application/json")
+	
+	res, err := http.DefaultClient.Do(req)
+
+	if err != nil {
+		fmt.Printf("Failed")
+	}
+
+	resBody, err := ioutil.ReadAll(res.Body)
+	response := string(resBody)
+
+	var data map[string]interface{}
+
+	// fmt.Printf("Response is \n %s \n", response)
+	_ = json.Unmarshal([]byte(response), &data)
+
+	status, _ := data["status"]
+	
+	if status == true {
+		fmt.Printf("Refreshed Buffer with ID %s \n", bufferId)
+	}
+}
