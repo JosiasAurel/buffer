@@ -119,8 +119,8 @@ const App: React.FC = (): JSX.Element => {
           error: "Failed to save buffer",
           loading: "Saving...",
         }
-      )
-      .then((_) => router.reload());
+      );
+    //.then((_) => router.reload());
   }
 
   function editBufferTrigger(
