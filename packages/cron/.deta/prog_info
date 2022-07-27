@@ -1,0 +1,1 @@
+{"id":"cc5c4223-6d3e-43f1-9abd-ad5474315b28","space":963,"runtime":"nodejs14.x","name":"cron","path":"1at7xl","project":"a0tqlrt1","account":"144798365827","region":"eu-central-1","deps":["deta@^1.1.0","prisma@^4.1.0","@prisma/client@^4.1.0"],"envs":["DATABASE_URL"],"public":true,"log_level":"off","cron":"1 day"}

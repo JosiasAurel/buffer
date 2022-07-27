@@ -22,4 +22,4 @@ app.lib.cron(async _ => {
     }
 });
 
-main();
+module.exports = app;
