@@ -42,7 +42,7 @@ const IndexPage: React.FC = (): JSX.Element => {
                 </div>
             </main>
 
-            <div>
+            <div style={{ margin: "0 1em" }}>
                 <Text h2>
                     Why Buffered.link ?
                 </Text>
@@ -107,6 +107,7 @@ const IndexPage: React.FC = (): JSX.Element => {
                     </Link>
                 </span>
             </footer>
+            <Spacer h={5} />
         </div>
     )
 }
