@@ -99,7 +99,7 @@ const IndexPage: React.FC = (): JSX.Element => {
                     <Link href="/docs">
                         Docs
                     </Link>
-                    <Link href="https://app.splitbee.io/projects/buffered.link">
+                    <Link href="https://app.splitbee.io/public/buffered.link">
                         Analytics
                     </Link>
                     <Link href="https://github.com/JosiasAurel/buffer">
