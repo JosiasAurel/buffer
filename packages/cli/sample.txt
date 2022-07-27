@@ -1,1 +1,1 @@
-HelloWorld 
+"The CLI works" 

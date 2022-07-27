@@ -9,6 +9,7 @@ import (
 	"crypto/sha256"
 	"strings"
 	"bytes"
+	"io/ioutil"
 )
 
 
@@ -76,7 +77,7 @@ func BufferRoutine(secretHash string, publicKey string, service string) {
 	jsonBody, err := json.Marshal(payload)
 	if err != nil { fmt.Printf("Failed") }
 
-	fmt.Printf("Marshalled Body : \n %s \n", jsonBody)
+	// fmt.Printf("Marshalled Body : \n %s \n", jsonBody)
 	// jsonBody := []byte(jsonBody_)
 	bodyReader := bytes.NewReader(jsonBody)
 	
@@ -89,7 +90,21 @@ func BufferRoutine(secretHash string, publicKey string, service string) {
 		fmt.Printf("Failed")
 	}
 
-	fmt.Printf("Response is \n %s \n", res)
+	resBody, err := ioutil.ReadAll(res.Body)
+	response := string(resBody)
+
+	var data map[string]interface{}
+
+	// fmt.Printf("Response is \n %s \n", response)
+	_ = json.Unmarshal([]byte(response), &data)
+
+	status, _ := data["status"]
+	
+	if status == true {
+		buffer, _ := data["buffer"].(map[string]interface{})
+		id, _ := buffer["id"]
+		fmt.Printf("Saved Buffer with ID %s \n", id)
+	}
 }
 
 func GetRoutine() {}
