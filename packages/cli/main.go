@@ -112,34 +112,12 @@ func RefreshRoutine(service string) {
 
 	bufferId := os.Args[2]
 	
-	payload := map[string]interface{}{
-		"bufferId": bufferId,
-	}
-
-	jsonBody, err := json.Marshal(payload)
+	req, err := http.NewRequest(http.MethodPost, service+"/refresh?id="+bufferId, nil)
 	
-	bodyReader := bytes.NewReader(jsonBody)
-	
-	req, err := http.NewRequest(http.MethodPost, service+"/refresh-buffer", bodyReader)
-	req.Header.Set("Content-Type", "application/json")
-	
-	res, err := http.DefaultClient.Do(req)
-
+	_, err = http.DefaultClient.Do(req)
 	if err != nil {
 		fmt.Printf("Failed")
 	}
-
-	resBody, err := ioutil.ReadAll(res.Body)
-	response := string(resBody)
-
-	var data map[string]interface{}
-
-	// fmt.Printf("Response is \n %s \n", response)
-	_ = json.Unmarshal([]byte(response), &data)
-
-	status, _ := data["status"]
 	
-	if status == true {
-		fmt.Printf("Refreshed Buffer with ID %s \n", bufferId)
-	}
+	fmt.Printf("Refreshed Buffer with ID %s \n", bufferId)
 }
