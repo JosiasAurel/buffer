@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export default async function fetchBuffers(
+export default async function updateBuffer(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
