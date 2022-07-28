@@ -2,6 +2,8 @@
 
 ![buffered.link](buffered.link.png)
 
+# PlanetScale x Hashnode Hackathon
+
 [Buffered.link](https://buffered.link/) A tool to share text between connected devices via.
 
 ## Setting Up
