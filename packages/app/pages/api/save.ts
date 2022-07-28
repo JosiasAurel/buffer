@@ -26,7 +26,7 @@ export default async function saveBuffer(
         id: nanoid(5),
         expiryDate: new Date(expiryDate),
       },
-    });
+    }).catch(error => console.log(error));
 
     res.json({
       status: true,

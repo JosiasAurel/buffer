@@ -11,8 +11,10 @@ import {
   Grid,
   Input,
   useClipboard,
+  Text,
+  Tooltip
 } from "@geist-ui/core";
-import { Plus, Home, Github, Settings, Share2 } from "@geist-ui/react-icons";
+import { Plus, Home, Github, Settings, Share2, Command } from "@geist-ui/react-icons";
 import { makeKeyPair, hashKey } from "../../utils/keys";
 import styles from "../../styles/app.module.css";
 import Buffer from "../../components/Buffer";
@@ -20,6 +22,7 @@ import toast from "react-hot-toast";
 import { createBuffer, fetchBuffers, updateBuffer } from "../../utils/handlers";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useKBar } from "kbar";
 
 let modalActions: any = {};
 
@@ -28,6 +31,7 @@ const App: React.FC = (): JSX.Element => {
   const [publicKey, setPublicKey] = useState<string>("");
 
   const { copy } = useClipboard();
+  const kbar = useKBar();
   // modals
   // modal for creating and updating buffer
   const { setVisible, bindings } = useModal();
@@ -162,32 +166,43 @@ const App: React.FC = (): JSX.Element => {
   return (
     <div className={styles.buffersPage}>
       <div className={styles.buffers}>
-        <Grid.Container
-          gap={1.5}
-          justify="center"
-          style={{ overflowY: "scroll", width: "100%", height: "100%" }}
-        >
-          {buffers.map((item) => (
-            <Grid key={item.id}>
-              <Buffer
-                content={item.content}
-                type={item.type}
-                date={item.date}
-                isPublic={item.isPublic}
-                id={item.id}
-                expiryDate={item.expiryDate}
-                editHandler={(_: any) =>
-                  editBufferTrigger(
-                    item.id,
-                    item.type,
-                    item.content,
-                    item.isPublic
-                  )
-                }
-              />
+        {buffers.length > 0 ?
+          <Grid.Container
+            gap={1.5}
+            justify="center"
+            style={{ overflowY: "scroll", width: "100%", height: "100%" }}
+          >
+            {buffers.map((item) => (
+              <Grid key={item.id}>
+                <Buffer
+                  content={item.content}
+                  type={item.type}
+                  date={item.date}
+                  isPublic={item.isPublic}
+                  id={item.id}
+                  expiryDate={item.expiryDate}
+                  editHandler={(_: any) =>
+                    editBufferTrigger(
+                      item.id,
+                      item.type,
+                      item.content,
+                      item.isPublic
+                    )
+                  }
+                />
+              </Grid>
+            ))}
+          </Grid.Container>
+          :
+          <Grid.Container
+            gap={1.5}
+            justify="center"
+            style={{ overflowY: "scroll", width: "100%", height: "100%" }}
+          >
+            <Grid>
+              <Text>Click on the <Plus /> icon to create a new buffer</Text>
             </Grid>
-          ))}
-        </Grid.Container>
+          </Grid.Container>}
       </div>
       <Card className={styles.fab}>
         <Button
@@ -197,6 +212,16 @@ const App: React.FC = (): JSX.Element => {
           icon={<Plus />}
           onClick={(_) => setVisible(true)}
         />
+        <Spacer />
+        <Tooltip placement="left" text="You can also activate the menu with CTRL+K or COMMAND+K">
+          <Button
+            auto
+            scale={0.35}
+            px={0.6}
+            icon={<Command />}
+            onClick={(_) => kbar.query.toggle()}
+          />
+        </Tooltip>
         <Spacer />
         <Button
           auto
