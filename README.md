@@ -1,8 +1,8 @@
-# buffer
+# Buffered.link
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FJosiasAurel%2Fbuffer.git&env=NEXT_PUBLIC_DETA_PROJECT_KEY&project-name=buffered)
+![buffered.link](buffered.link.png)
 
-A tool to share text between connected devices via PoO
+[Buffered.link](https://buffered.link/) A tool to share text between connected devices via.
 
 ## Setting Up
 
@@ -12,10 +12,10 @@ Clone this repository
 https://github.com/JosiasAurel/buffer.git
 ```
 
-Navigate to the directory
+Navigate to the app directory
 
 ```shell
-cd buffer
+cd buffer/packages/app
 ```
 
 Install dependecies
@@ -24,30 +24,37 @@ Install dependecies
 yarn install
 ```
 
-Create a new project on [Deta][https://deta.sh] and create a `.env` file.
+Go to planetscale and create a new database.
 Make sure to add the following in your `.env` file
 
 ```env
-NEXT_PUBLIC_DETA_PROJECT_KEY=<DETA_PROJECT_KEY>
+DATABASE_URL=<your-database-url>
 ```
 
 Start the development server with `yarn dev`
 
-## Deployment
-
-To deploy it, if you have vercel installed, in your project directory run `vercel --prod`.
-Set up the environment variable in your Vercel project settings.
-
-You could also deploy straight from here
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FJosiasAurel%2Fbuffer.git&env=NEXT_PUBLIC_DETA_PROJECT_KEY&project-name=buffered)
-
 ## Building the CLI from source
 
-First make sure you have [pipenv](https://pypi.org/project/pipenv/) installed.
-Navigate to the `cli` directory and run `pipenv shell`.
+The CLI is written in GoLang so you should make sure to have it locally.
 
-Once in the virtual environment, run `pipenv install` to install all the required dependencies.
+After you have cloned this repository, navigate to the CLI directory.
 
-To build the CLI, run `pyinstaller --onefile bfdl`
-This command will build the CLI and output the binary in the `dist` directory.
-You can then add the CLI to `PATH` environment variable and use it.
+```shell
+cd buffer/packages/app
+```
+
+The CLI uses only the Go standard library and so there is no dependency to install.
+
+Build the CLI with the following command
+
+```shell
+go build main.go
+```
+
+For a more optimized binary size, run
+
+```shell
+go build -ldflags="-s -w" main.go
+```
+
+Instructions on setting up the CLI are found [here](https://buffered.link/docs)
