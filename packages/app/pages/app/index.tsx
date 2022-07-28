@@ -10,7 +10,7 @@ import {
   Button,
   Grid,
   Input,
-  useClipboard
+  useClipboard,
 } from "@geist-ui/core";
 import { Plus, Home, Github, Settings, Share2 } from "@geist-ui/react-icons";
 import { makeKeyPair, hashKey } from "../../utils/keys";
@@ -105,21 +105,20 @@ const App: React.FC = (): JSX.Element => {
       publicKey,
     };
 
-    toast
-      .promise(
-        createBuffer(payload).then((result: BResponse) => {
-          setBuffers([...buffers, result.buffer]);
-          setVisible(false);
-          setContent("");
-          setBufferType("text");
-          setIsPublic(false);
-        }),
-        {
-          success: "Buffer Saved",
-          error: "Failed to save buffer",
-          loading: "Saving...",
-        }
-      );
+    toast.promise(
+      createBuffer(payload).then((result: BResponse) => {
+        setBuffers([...buffers, result.buffer]);
+        setVisible(false);
+        setContent("");
+        setBufferType("text");
+        setIsPublic(false);
+      }),
+      {
+        success: "Buffer Saved",
+        error: "Failed to save buffer",
+        loading: "Saving...",
+      }
+    );
     //.then((_) => router.reload());
   }
 
@@ -211,33 +210,63 @@ const App: React.FC = (): JSX.Element => {
           <Button auto scale={0.35} px={0.6} icon={<Github />} />
         </Link>
         <Spacer />
-        <Button onClick={_ => {
-          copy(`https://buffered.link/${publicKey}`);
-          toast("Copied Public Buffer to Clipboard", { icon: "📎" });
-        }} auto scale={0.35} px={0.6} icon={<Share2 />} />
+        <Button
+          onClick={(_) => {
+            copy(`https://buffered.link/${publicKey}`);
+            toast("Copied Public Buffer to Clipboard", { icon: "📎" });
+          }}
+          auto
+          scale={0.35}
+          px={0.6}
+          icon={<Share2 />}
+        />
         <Spacer />
-        <Button onClick={_ => sSetVisible(true)} auto scale={0.35} px={0.6} icon={<Settings />} />
+        <Button
+          onClick={(_) => sSetVisible(true)}
+          auto
+          scale={0.35}
+          px={0.6}
+          icon={<Settings />}
+        />
       </Card>
 
       {/* modal for settings */}
-      <Modal {...sBindings} >
+      <Modal {...sBindings}>
         <Modal.Title> Settings </Modal.Title>
-        <Modal.Content style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center"
-        }}>
-          <Input onChange={e => textChangeHandler(e, setSecret)} clearable value={secret} placeholder="Your Secret" />
+        <Modal.Content
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Input
+            onChange={(e) => textChangeHandler(e, setSecret)}
+            clearable
+            value={secret}
+            placeholder="Your Secret"
+          />
           <Spacer />
-          <Input onChange={e => textChangeHandler(e, setPublicKey)} clearable value={publicKey} placeholder="Your Public Key" />
+          <Input
+            onChange={(e) => textChangeHandler(e, setPublicKey)}
+            clearable
+            value={publicKey}
+            placeholder="Your Public Key"
+          />
         </Modal.Content>
-        <Modal.Action passive onClick={_ => sSetVisible(false)}>Close</Modal.Action>
-        <Modal.Action onClick={_ => {
-          localStorage.setItem("secret", secret);
-          localStorage.setItem("publicKey", publicKey);
+        <Modal.Action passive onClick={(_) => sSetVisible(false)}>
+          Close
+        </Modal.Action>
+        <Modal.Action
+          onClick={(_) => {
+            localStorage.setItem("secret", secret);
+            localStorage.setItem("publicKey", publicKey);
 
-          router.reload();
-        }}>Save</Modal.Action>
+            router.reload();
+          }}
+        >
+          Save
+        </Modal.Action>
       </Modal>
 
       {/* modal for creating & updating buffer */}

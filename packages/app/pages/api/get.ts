@@ -7,18 +7,17 @@ export default async function getBuffer(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-    
-    // console.log(req.query);
+  // console.log(req.query);
   try {
-        const buffer = await prisma.buffer.findUnique({
-            where: {
-                id: req.query.id as string
-            }
-        });
+    const buffer = await prisma.buffer.findUnique({
+      where: {
+        id: req.query.id as string,
+      },
+    });
 
     res.json({
       status: true,
-      buffer
+      buffer,
     });
   } catch (error) {
     res.json({

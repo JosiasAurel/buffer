@@ -81,7 +81,7 @@ function updateBuffer(
 function refreshBuffer(bufferId: string): Promise<BResponse | string> {
   return new Promise((resolve, reject) => {
     fetch(`/api/refresh?id=${bufferId}`)
-      .then(res => res.json())
+      .then((res) => res.json())
       .then((result) => {
         if (result.status) {
           resolve(result);
