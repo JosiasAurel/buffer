@@ -5,7 +5,12 @@ import { Text, Spacer } from "@geist-ui/core";
 const Footer: React.FC = (): JSX.Element => {
     return (
         <>
-            <footer>
+            <footer style={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-evenly",
+                alignItems: "center"
+            }}>
                 <Text>
                     Made by{" "}
                     <Link href="https://twitter.com/JosiasWing">Josias Aurel</Link>
@@ -18,6 +23,7 @@ const Footer: React.FC = (): JSX.Element => {
                         flexDirection: "row",
                         justifyContent: "space-evenly",
                         alignItems: "center",
+                        width: "100%"
                     }}
                 >
                     <Link href="/docs">Docs</Link>
@@ -26,8 +32,10 @@ const Footer: React.FC = (): JSX.Element => {
                     </Link>
                     <Link href="https://github.com/JosiasAurel/buffer">Source Code</Link>
                 </span>
+                <Spacer />
+                <Text h4>Built for PlanetScale x Hashnode Hackathon</Text>
             </footer>
-            <Spacer h={5} />
+            <Spacer h={3} />
         </>
     );
 };
