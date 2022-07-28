@@ -52,11 +52,11 @@ const Buffer: React.FC<Props> = ({
         }}
       >
         {type === "text" ? (
-          <Note label={false} style={{ overflow: "scroll" }}>
+          <Note label={false} style={{ maxHeight: "300px", overflow: "scroll" }}>
             {content}
           </Note>
         ) : (
-          <Code classic={true} style={{ overflow: "scroll" }} block>
+          <Code classic={true} style={{ maxHeight: "300px", overflow: "scroll" }} block>
             {content}
           </Code>
         )}
