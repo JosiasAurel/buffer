@@ -33,7 +33,7 @@ const Footer: React.FC = (): JSX.Element => {
                     <Link href="https://github.com/JosiasAurel/buffer">Source Code</Link>
                 </span>
                 <Spacer />
-                <Text h4>Built for PlanetScale x Hashnode Hackathon</Text>
+                <Text style={{ textAlign: "center" }} h4>Built for PlanetScale x Hashnode Hackathon</Text>
             </footer>
             <Spacer h={3} />
         </>
