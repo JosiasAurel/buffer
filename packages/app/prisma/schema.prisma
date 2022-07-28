@@ -15,7 +15,7 @@ model Buffer {
   publicOwner String
   type        String
   date        DateTime
-  content     String
+  content     String   @db.LongText
   expiryDate  DateTime
   isPublic    Boolean
 }
