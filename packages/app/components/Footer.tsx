@@ -8,7 +8,8 @@ const Footer: React.FC = (): JSX.Element => {
             <footer>
                 <Text>
                     Made by{" "}
-                    <Link href="https://twitter.com/JosiasWing">Josias Aurel</Link>on
+                    <Link href="https://twitter.com/JosiasWing">Josias Aurel</Link>
+                    on
                     Earth 🌍
                 </Text>
                 <span

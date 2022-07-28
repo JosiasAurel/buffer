@@ -44,7 +44,7 @@ const IndexPage: React.FC = (): JSX.Element => {
             style={{ textDecoration: "underline" }}
             href="https://twitter.com/JosiasWing"
           >
-            myself{" "}
+            myself
           </Link>
           as I was constantly sharing small text between my phone and my
           computer.
