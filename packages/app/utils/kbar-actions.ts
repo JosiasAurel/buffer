@@ -37,6 +37,13 @@ const actions = [
     keywords: "settings",
     perform: () => modalActions.settingsModalVisible(true),
   },
+  {
+    id: "docs",
+    name: "Documentation",
+    shortcut: ["d"],
+    keywords: "docs",
+    perform: () => window.location.replace("/docs"),
+  },
 ];
 
 export { actions };
