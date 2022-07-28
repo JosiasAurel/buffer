@@ -2,6 +2,7 @@ import React from "react";
 import { Text, Badge, Spacer, Snippet } from "@geist-ui/core";
 import Link from "next/link";
 import Image from "next/image";
+import Footer from "../components/Footer";
 
 const DocsPage: React.FC = (): JSX.Element => {
   return (
@@ -72,8 +73,7 @@ const DocsPage: React.FC = (): JSX.Element => {
             </li>
             <li>
               Now we need to add your credentials. Open{" "}
-              <Link href="https://buffered.link/app">the app</Link> and
-              settings.
+              <Link href="/app">the app</Link> and settings.
             </li>
             <li>
               On your computer, create a new environment variable called{" "}
@@ -144,28 +144,7 @@ const DocsPage: React.FC = (): JSX.Element => {
         </Text>
       </main>
 
-      <footer>
-        <Text>
-          Made by{" "}
-          <Link href="https://twitter.com/JosiasWing">Josias Aurel</Link> on
-          Earth 🌍{" "}
-        </Text>
-        <span
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            alignItems: "center",
-          }}
-        >
-          <Link href="/docs">Docs</Link>
-          <Link href="https://app.splitbee.io/public/buffered.link">
-            Analytics
-          </Link>
-          <Link href="https://github.com/JosiasAurel/buffer">Source Code</Link>
-        </span>
-      </footer>
-      <Spacer h={5} />
+      <Footer />
     </div>
   );
 };

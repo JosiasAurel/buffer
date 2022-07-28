@@ -3,6 +3,7 @@ import { Card, Grid, Text, useClipboard, Badge } from "@geist-ui/core";
 import { PrismaClient } from "@prisma/client";
 import toast from "react-hot-toast";
 import Link from "next/link";
+import Footer from "../components/Footer";
 
 type Props = { data: string };
 
@@ -42,6 +43,8 @@ const PublicBuffersPage: React.FC<Props> = ({ data }): JSX.Element => {
           ))}
         </Grid.Container>
       </div>
+
+      <Footer />
     </div>
   );
 };
