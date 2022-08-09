@@ -14,8 +14,7 @@
   "author": "Josias Aurel",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^4.1.0",
-    "deta": "^1.1.0",
-    "prisma": "^4.1.0"
+    "axios": "^0.27.2",
+    "deta": "^1.1.0"
   }
 }
