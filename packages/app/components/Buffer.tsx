@@ -15,7 +15,7 @@ import { RefreshCw } from "@geist-ui/react-icons";
 import toast from "react-hot-toast";
 import { deleteBuffer, refreshBuffer } from "../utils/handlers";
 
-type Props = Partial<Buffer> & { editHandler: Function };
+type Props = Partial<Buffer> & { editHandler: Function, deleteHandler: Function };
 
 // pls forgive me
 function RemainingTime(expiryDate: number): string {
