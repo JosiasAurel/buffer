@@ -19,7 +19,7 @@ import { makeKeyPair, hashKey } from "../../utils/keys";
 import styles from "../../styles/app.module.css";
 import Buffer from "../../components/Buffer";
 import toast from "react-hot-toast";
-import { createBuffer, fetchBuffers, updateBuffer } from "../../utils/handlers";
+import { createBuffer, deleteBuffer, fetchBuffers, updateBuffer } from "../../utils/handlers";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { useKBar } from "kbar";
@@ -126,6 +126,18 @@ const App: React.FC = (): JSX.Element => {
     //.then((_) => router.reload());
   }
 
+  
+  function removeBuffer(bufferId: string): Promise<any>{
+    return new Promise((resolve, reject) => {
+      deleteBuffer(bufferId)
+      .then((result) => {
+          resolve(result)
+          setBuffers((buffers) => buffers.filter(buffer => buffer.id !== bufferId))
+      }).catch((error)=>reject("Failed to delete."))
+  
+    })
+  }
+
   function editBufferTrigger(
     id: string,
     type: "text" | "code",
@@ -189,6 +201,8 @@ const App: React.FC = (): JSX.Element => {
                       item.isPublic
                     )
                   }
+                  deleteHandler = {( _:  any) => removeBuffer(item.id)}
+                  
                 />
               </Grid>
             ))}
