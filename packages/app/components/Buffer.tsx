@@ -34,6 +34,7 @@ const Buffer: React.FC<Props> = ({
   type,
   isPublic,
   editHandler,
+  deleteHandler,
   expiryDate,
 }): JSX.Element => {
   const { copy } = useClipboard();
@@ -92,7 +93,7 @@ const Buffer: React.FC<Props> = ({
             auto
             scale={0.35}
             onClick={(_) => {
-              toast.promise(deleteBuffer(id), {
+              toast.promise(deleteHandler(), {
                 loading: "Deleting...",
                 success: "Deleted",
                 error: "Failed",
